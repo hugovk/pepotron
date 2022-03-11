@@ -1,12 +1,12 @@
 repos:
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.31.0
+    rev: v2.31.1
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
 
   - repo: https://github.com/psf/black
-    rev: 21.12b0
+    rev: 22.1.0
     hooks:
       - id: black
         args: [--target-version=py37]
@@ -39,9 +39,15 @@ repos:
     rev: v1.20.0
     hooks:
       - id: setup-cfg-fmt
+        args: [--max-py-version=3.11]
+
+  - repo: https://github.com/tox-dev/tox-ini-fmt
+    rev: "0.5.2"
+    hooks:
+      - id: tox-ini-fmt
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.5.1
+    rev: v2.6.0
     hooks:
       - id: prettier
         args: [--prose-wrap=always, --print-width=88]

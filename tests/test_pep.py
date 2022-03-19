@@ -36,3 +36,13 @@ def test_url(search: str, base_url: str, expected_url: str) -> None:
     pep_url = pepotron.url(search, base_url)
     # Assert
     assert pep_url == expected_url
+
+
+def test_url_pr() -> None:
+    # Arrange
+    search = "594"
+    pr = 2440
+    # Act
+    pep_url = pepotron.url(search, pr=pr)
+    # Assert
+    assert pep_url == "https://pep-previews--2440.org.readthedocs.build/pep-0594/"

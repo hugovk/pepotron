@@ -18,16 +18,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=Formatter)
     parser.add_argument("search", help="PEP number, or Python version for its schedule")
     parser.add_argument(
-        "-u",
-        "--url",
-        default="https://peps.python.org",
-        help="Base URL for PEPs",
+        "-u", "--url", default="https://peps.python.org", help="Base URL for PEPs"
     )
+    parser.add_argument("--pr", type=int, help="Open preview for python/peps PR")
     parser.add_argument(
         "-V", "--version", action="version", version=f"%(prog)s {pepotron.__version__}"
     )
     args = parser.parse_args()
-    pepotron.pep(search=args.search, base_url=args.url)
+    pepotron.pep(search=args.search, base_url=args.url, pr=args.pr)
 
 
 if __name__ == "__main__":

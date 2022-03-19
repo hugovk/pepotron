@@ -37,7 +37,7 @@ run("pep --help")
 
 ```console
 $ pep --help
-usage: pep [-h] [-u URL] [-V] search
+usage: pep [-h] [-u URL] [--pr PR] [-V] search
 
 CLI to open PEPs in your browser
 
@@ -47,6 +47,7 @@ positional arguments:
 options:
   -h, --help         show this help message and exit
   -u URL, --url URL  Base URL for PEPs (default: https://peps.python.org)
+  --pr PR            Open preview for python/peps PR (default: None)
   -V, --version      show program's version number and exit
 ```
 
@@ -64,4 +65,11 @@ https://peps.python.org/pep-0008/
 ```console
 $ pep 3.11
 https://peps.python.org/pep-0664/
+```
+
+### Open a build preview of a python/peps PR
+
+```console
+$ pep 594 --pr 2440
+https://pep-previews--2440.org.readthedocs.build/pep-0594/
 ```

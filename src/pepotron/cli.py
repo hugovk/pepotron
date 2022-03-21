@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 CLI to open PEPs in your browser
 """
@@ -16,7 +15,9 @@ class Formatter(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=Formatter)
-    parser.add_argument("search", help="PEP number, or Python version for its schedule")
+    parser.add_argument(
+        "search", nargs="?", help="PEP number, or Python version for its schedule"
+    )
     parser.add_argument(
         "-u", "--url", default="https://peps.python.org", help="Base URL for PEPs"
     )

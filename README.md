@@ -42,7 +42,8 @@ usage: pep [-h] [-u URL] [-p PR] [-V] [search]
 CLI to open PEPs in your browser
 
 positional arguments:
-  search             PEP number, or Python version for its schedule
+  search             PEP number, or Python version for its schedule (default:
+                     None)
 
 options:
   -h, --help         show this help message and exit

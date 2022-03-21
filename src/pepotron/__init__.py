@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 CLI to open PEPs in your browser
 """
@@ -40,17 +39,22 @@ VERSION_TO_PEP = {
 }
 
 
-def url(search: str, base_url: str | None = None, pr: int | None = None) -> str:
+def url(search: str | None, base_url: str | None = None, pr: int | None = None) -> str:
     """Get PEP URL"""
-    try:
-        number = int(search)
-    except ValueError:
-        number = VERSION_TO_PEP[search]
-
     if pr:
         base_url = f"https://pep-previews--{pr}.org.readthedocs.build"
 
-    return base_url.rstrip("/") + f"/pep-{number:04}" + "/"
+    result = base_url.rstrip("/")
+
+    if search:
+        try:
+            number = int(search)
+        except ValueError:
+            number = VERSION_TO_PEP[search]
+
+        result += f"/pep-{number:04}/"
+
+    return result
 
 
 def pep(search: str, base_url: str | None = None, pr: int | None = None) -> None:

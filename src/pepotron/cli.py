@@ -20,7 +20,7 @@ def main() -> None:
     parser.add_argument(
         "-u", "--url", default="https://peps.python.org", help="Base URL for PEPs"
     )
-    parser.add_argument("--pr", type=int, help="Open preview for python/peps PR")
+    parser.add_argument("-p", "--pr", type=int, help="Open preview for python/peps PR")
     parser.add_argument(
         "-V", "--version", action="version", version=f"%(prog)s {pepotron.__version__}"
     )

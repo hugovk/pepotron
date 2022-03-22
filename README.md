@@ -74,3 +74,12 @@ https://peps.python.org/pep-0664/
 $ pep 594 --pr 2440
 https://pep-previews--2440.org.readthedocs.build/pep-0594/
 ```
+
+### Open the PEPs website
+
+```console
+$ pep
+https://peps.python.org/
+$ pep --pr 2440
+https://pep-previews--2440.org.readthedocs.build
+```

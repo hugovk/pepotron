@@ -37,17 +37,18 @@ run("pep --help")
 
 ```console
 $ pep --help
-usage: pep [-h] [-u URL] [--pr PR] [-V] search
+usage: pep [-h] [-u URL] [-p PR] [-V] [search]
 
 CLI to open PEPs in your browser
 
 positional arguments:
-  search             PEP number, or Python version for its schedule
+  search             PEP number, or Python version for its schedule (default:
+                     None)
 
 options:
   -h, --help         show this help message and exit
   -u URL, --url URL  Base URL for PEPs (default: https://peps.python.org)
-  --pr PR            Open preview for python/peps PR (default: None)
+  -p PR, --pr PR     Open preview for python/peps PR (default: None)
   -V, --version      show program's version number and exit
 ```
 
@@ -72,4 +73,13 @@ https://peps.python.org/pep-0664/
 ```console
 $ pep 594 --pr 2440
 https://pep-previews--2440.org.readthedocs.build/pep-0594/
+```
+
+### Open the PEPs website
+
+```console
+$ pep
+https://peps.python.org/
+$ pep --pr 2440
+https://pep-previews--2440.org.readthedocs.build
 ```

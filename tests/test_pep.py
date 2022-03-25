@@ -29,6 +29,11 @@ import pepotron
             "https://hugovk.github.io/peps",
             "https://hugovk.github.io/peps/pep-0664/",
         ),
+        (
+            None,
+            "https://peps.python.org",
+            "https://peps.python.org",
+        ),
     ],
 )
 def test_url(search: str, base_url: str, expected_url: str) -> None:
@@ -38,11 +43,17 @@ def test_url(search: str, base_url: str, expected_url: str) -> None:
     assert pep_url == expected_url
 
 
-def test_url_pr() -> None:
+@pytest.mark.parametrize(
+    "search, expected_url",
+    [
+        ("594", "https://pep-previews--2440.org.readthedocs.build/pep-0594/"),
+        (None, "https://pep-previews--2440.org.readthedocs.build"),
+    ],
+)
+def test_url_pr(search, expected_url) -> None:
     # Arrange
-    search = "594"
     pr = 2440
     # Act
     pep_url = pepotron.url(search, pr=pr)
     # Assert
-    assert pep_url == "https://pep-previews--2440.org.readthedocs.build/pep-0594/"
+    assert pep_url == expected_url

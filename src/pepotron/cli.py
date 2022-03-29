@@ -1,5 +1,5 @@
 """
-CLI to open PEPs in your browser
+pepotron: CLI to open PEPs in your browser
 """
 import argparse
 
@@ -19,14 +19,19 @@ def main() -> None:
         "search", nargs="?", help="PEP number, or Python version for its schedule"
     )
     parser.add_argument(
-        "-u", "--url", default="https://peps.python.org", help="Base URL for PEPs"
+        "-u", "--url", default=pepotron.BASE_URL, help="Base URL for PEPs"
     )
     parser.add_argument("-p", "--pr", type=int, help="Open preview for python/peps PR")
+    parser.add_argument(
+        "-n", "--dry-run", action="store_true", help="Don't open in browser"
+    )
     parser.add_argument(
         "-V", "--version", action="version", version=f"%(prog)s {pepotron.__version__}"
     )
     args = parser.parse_args()
-    pepotron.pep(search=args.search, base_url=args.url, pr=args.pr)
+    pepotron.pep(
+        search=args.search, base_url=args.url, pr=args.pr, dry_run=args.dry_run
+    )
 
 
 if __name__ == "__main__":

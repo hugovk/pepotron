@@ -7,22 +7,28 @@ import pepotron
 
 
 @pytest.mark.parametrize(
+    "search, expected_url",
+    [
+        ("8", "https://peps.python.org/pep-0008/"),
+        ("12", "https://peps.python.org/pep-0012/"),
+        ("2.7", "https://peps.python.org/pep-0373/"),
+        (None, "https://peps.python.org"),
+    ],
+)
+def test_url(search: str, expected_url: str) -> None:
+    # Act
+    pep_url = pepotron.url(search)
+    # Assert
+    assert pep_url == expected_url
+
+
+@pytest.mark.parametrize(
     "search, base_url, expected_url",
     [
         (
             "8",
-            "https://peps.python.org",
-            "https://peps.python.org/pep-0008/",
-        ),
-        (
-            "12",
-            "https://peps.python.org/",
-            "https://peps.python.org/pep-0012/",
-        ),
-        (
-            "2.7",
-            "https://peps.python.org/",
-            "https://peps.python.org/pep-0373/",
+            "https://hugovk.github.io/peps",
+            "https://hugovk.github.io/peps/pep-0008/",
         ),
         (
             "3.11",
@@ -31,12 +37,12 @@ import pepotron
         ),
         (
             None,
-            "https://peps.python.org",
-            "https://peps.python.org",
+            "https://hugovk.github.io/peps",
+            "https://hugovk.github.io/peps",
         ),
     ],
 )
-def test_url(search: str, base_url: str, expected_url: str) -> None:
+def test_url_base_url(search: str, base_url: str, expected_url: str) -> None:
     # Act
     pep_url = pepotron.url(search, base_url)
     # Assert
@@ -57,3 +63,7 @@ def test_url_pr(search, expected_url) -> None:
     pep_url = pepotron.url(search, pr=pr)
     # Assert
     assert pep_url == expected_url
+
+
+def test_pep() -> None:
+    pepotron.pep("8", dry_run=True)

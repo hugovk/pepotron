@@ -28,32 +28,6 @@ pip install .
 
 ## Usage
 
-### Help
-
-<!-- [[[cog
-from scripts.run_command import run
-run("pep --help")
-]]] -->
-
-```console
-$ pep --help
-usage: pep [-h] [-u URL] [-p PR] [-V] [search]
-
-CLI to open PEPs in your browser
-
-positional arguments:
-  search             PEP number, or Python version for its schedule (default:
-                     None)
-
-options:
-  -h, --help         show this help message and exit
-  -u URL, --url URL  Base URL for PEPs (default: https://peps.python.org)
-  -p PR, --pr PR     Open preview for python/peps PR (default: None)
-  -V, --version      show program's version number and exit
-```
-
-<!-- [[[end]]] -->
-
 ### Open a PEP
 
 ```console
@@ -83,3 +57,30 @@ https://peps.python.org/
 $ pep --pr 2440
 https://pep-previews--2440.org.readthedocs.build
 ```
+
+### Help
+
+<!-- [[[cog
+from scripts.run_command import run
+run("pep --help")
+]]] -->
+
+```console
+$ pep --help
+usage: pep [-h] [-u URL] [-p PR] [-n] [-V] [search]
+
+pepotron: CLI to open PEPs in your browser
+
+positional arguments:
+  search             PEP number, or Python version for its schedule (default:
+                     None)
+
+options:
+  -h, --help         show this help message and exit
+  -u URL, --url URL  Base URL for PEPs (default: https://peps.python.org)
+  -p PR, --pr PR     Open preview for python/peps PR (default: None)
+  -n, --dry-run      Don't open in browser (default: False)
+  -V, --version      show program's version number and exit
+```
+
+<!-- [[[end]]] -->

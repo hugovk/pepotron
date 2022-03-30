@@ -3,8 +3,6 @@ CLI to open PEPs in your browser
 """
 from __future__ import annotations
 
-import webbrowser
-
 try:
     # Python 3.8+
     import importlib.metadata as importlib_metadata
@@ -13,6 +11,8 @@ except ImportError:
     import importlib_metadata  # type: ignore
 
 __version__ = importlib_metadata.version(__name__)
+
+BASE_URL = "https://peps.python.org"
 
 VERSION_TO_PEP = {
     "1.6": 160,
@@ -39,7 +39,7 @@ VERSION_TO_PEP = {
 }
 
 
-def url(search: str | None, base_url: str | None = None, pr: int | None = None) -> str:
+def url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> str:
     """Get PEP URL"""
     if pr:
         base_url = f"https://pep-previews--{pr}.org.readthedocs.build"
@@ -57,8 +57,13 @@ def url(search: str | None, base_url: str | None = None, pr: int | None = None) 
     return result
 
 
-def pep(search: str, base_url: str | None = None, pr: int | None = None) -> None:
+def pep(
+    search: str, base_url: str = BASE_URL, pr: int | None = None, dry_run: bool = False
+) -> None:
     """Open this PEP in the browser"""
     pep_url = url(search, base_url, pr)
     print(pep_url)
-    webbrowser.open(pep_url, new=2)  # 2 = open in a new tab, if possible
+    if not dry_run:
+        import webbrowser
+
+        webbrowser.open(pep_url, new=2)  # 2 = open in a new tab, if possible

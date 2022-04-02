@@ -13,6 +13,7 @@ import pepotron
         ("12", "https://peps.python.org/pep-0012/"),
         ("2.7", "https://peps.python.org/pep-0373/"),
         (None, "https://peps.python.org"),
+        ("dead batteries", "https://peps.python.org/pep-0594/"),
     ],
 )
 def test_url(search: str, expected_url: str) -> None:
@@ -39,6 +40,11 @@ def test_url(search: str, expected_url: str) -> None:
             None,
             "https://hugovk.github.io/peps",
             "https://hugovk.github.io/peps",
+        ),
+        (
+            "dead batteries",
+            "https://hugovk.github.io/peps",
+            "https://hugovk.github.io/peps/pep-0594/",
         ),
     ],
 )

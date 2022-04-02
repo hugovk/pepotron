@@ -10,7 +10,10 @@ exclude_lines =
     if __name__ == .__main__.:
     def main
 
+    if TYPE_CHECKING:
+
 [run]
 omit =
     */pepotron/__main__.py
     */pepotron/cli.py
+    */pepotron/scripts/*

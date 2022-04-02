@@ -3,6 +3,12 @@ CLI to open PEPs in your browser
 """
 from __future__ import annotations
 
+import logging
+import warnings
+from pathlib import Path
+
+from pepotron import _cache
+
 try:
     # Python 3.8+
     import importlib.metadata as importlib_metadata
@@ -13,6 +19,8 @@ except ImportError:
 __version__ = importlib_metadata.version(__name__)
 
 BASE_URL = "https://peps.python.org"
+JSON_PATH = "/api/peps.json"
+USER_AGENT = f"pepotron/{__version__}"
 
 VERSION_TO_PEP = {
     "1.6": 160,
@@ -39,6 +47,55 @@ VERSION_TO_PEP = {
 }
 
 
+def _download_peps_json() -> Path:
+    json_url = BASE_URL + JSON_PATH
+    cache_file = _cache.filename(json_url)
+    logging.info(f"Cache file: {cache_file}")
+
+    res = _cache.load(cache_file)
+    if res == {}:
+        # No cache, or couldn't load cache
+        import httpx
+
+        r = httpx.get(json_url, headers={"User-Agent": USER_AGENT})
+
+        # Raise if we made a bad request
+        # (4XX client error or 5XX server error response)
+        logging.info(f"HTTP status code: {r.status_code}")
+        r.raise_for_status()
+
+        res = r.json()
+
+        _cache.save(cache_file, res)
+
+    return cache_file
+
+
+def word_search(search: str | None) -> int:
+    import json
+
+    peps_file = _download_peps_json()
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", category=UserWarning)
+        from thefuzz import process
+
+    with open(peps_file) as f:
+        peps = json.load(f)
+
+    # We only want to search titles
+    peps = ((number, details["title"]) for number, details in peps.items())
+
+    result: list[tuple[tuple[str, str], int]] = process.extract(search, peps)
+    print("Score\tResult")
+    for match, score in result:
+        print(f"{score}\tPEP {match[0]}: {match[1]}")
+    print()
+
+    # Top result -> match -> PEP number
+    return int(result[0][0][0])
+
+
 def url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> str:
     """Get PEP URL"""
     if pr:
@@ -48,11 +105,17 @@ def url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> 
 
     if search:
         try:
+            # pep 8
             number = int(search)
         except ValueError:
-            number = VERSION_TO_PEP[search]
+            try:
+                # pep 3.11
+                number = VERSION_TO_PEP[search]
+            except KeyError:
+                # pep "dead batteries"
+                number = word_search(search)
 
-        result += f"/pep-{number:04}/"
+        result += f"/pep-{number:0>4}/"
 
     return result
 
@@ -62,8 +125,8 @@ def pep(
 ) -> None:
     """Open this PEP in the browser"""
     pep_url = url(search, base_url, pr)
-    print(pep_url)
     if not dry_run:
         import webbrowser
 
-        webbrowser.open(pep_url, new=2)  # 2 = open in a new tab, if possible
+        webbrowser.open_new_tab(pep_url)
+    print(pep_url)

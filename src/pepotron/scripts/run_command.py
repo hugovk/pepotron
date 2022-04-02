@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import shlex
 import subprocess
 
 
 def run(command: str, with_console: bool = True, line_limit: int | None = None) -> None:
-    process = subprocess.run(command.split(), capture_output=True, text=True)
+    command_parts = shlex.split(command)
+    command_parts.append("--dry-run")
+    process = subprocess.run(command_parts, capture_output=True, text=True)
     print()
     if with_console:
         print("```console")

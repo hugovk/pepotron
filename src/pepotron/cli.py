@@ -16,7 +16,7 @@ def main() -> None:
     )
     parser.add_argument(
         "search",
-        nargs="?",
+        nargs="*",
         help="PEP number, or Python version for its schedule, or words from title",
     )
     parser.add_argument(
@@ -44,6 +44,8 @@ def main() -> None:
     args = parser.parse_args()
 
     logging.basicConfig(level=args.loglevel)
+    if args.search:
+        args.search = " ".join(args.search)
     if args.clear_cache:
         _cache.clear(clear_all=True)
 

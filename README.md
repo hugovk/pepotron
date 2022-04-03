@@ -55,10 +55,10 @@ https://peps.python.org/pep-0664/
 
 ### Open a PEP by searching for words in the title
 
-<!-- [[[cog run('pep "dead batteries"') ]]] -->
+<!-- [[[cog run("pep dead batteries") ]]] -->
 
 ```console
-$ pep "dead batteries"
+$ pep dead batteries
 Score	Result
 90	PEP 594: Removing dead batteries from the standard library
 55	PEP 288: Generators Attributes and Exceptions
@@ -108,7 +108,7 @@ https://pep-previews--2440.org.readthedocs.build
 
 ```console
 $ pep --help
-usage: pep [-h] [-u URL] [-p PR] [-n] [--clear-cache] [-v] [-V] [search]
+usage: pep [-h] [-u URL] [-p PR] [-n] [--clear-cache] [-v] [-V] [search ...]
 
 pepotron: CLI to open PEPs in your browser
 

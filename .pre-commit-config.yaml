@@ -40,7 +40,7 @@ repos:
       - id: pyproject-fmt
 
   - repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v1.20.0
+    rev: v1.20.1
     hooks:
       - id: setup-cfg-fmt
         args: [--max-py-version=3.11]
@@ -51,7 +51,7 @@ repos:
       - id: tox-ini-fmt
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.6.1
+    rev: v2.6.2
     hooks:
       - id: prettier
         args: [--prose-wrap=always, --print-width=88]

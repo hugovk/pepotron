@@ -18,12 +18,20 @@ CLI to open PEPs in your browser.
 python3 -m pip install --upgrade pepotron
 ```
 
+### With [pipx][pipx]
+
+```bash
+pipx install pepotron
+```
+
+[pipx]: https://github.com/pypa/pipx
+
 ### From source
 
 ```bash
 git clone https://github.com/hugovk/pepotron
 cd pepotron
-pip install .
+python3 -m pip install .
 ```
 
 ## Usage

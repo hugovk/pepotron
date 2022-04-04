@@ -31,7 +31,7 @@ pipx install pepotron
 ```bash
 git clone https://github.com/hugovk/pepotron
 cd pepotron
-pip install .
+python3 -m pip install .
 ```
 
 ## Usage

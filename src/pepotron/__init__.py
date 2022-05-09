@@ -68,6 +68,7 @@ def _download_peps_json() -> Path:
 
         _cache.save(cache_file, res)
 
+    logging.info("")
     return cache_file
 
 
@@ -96,7 +97,7 @@ def word_search(search: str | None) -> int:
     return int(result[0][0][0])
 
 
-def url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> str:
+def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> str:
     """Get PEP URL"""
     if pr:
         base_url = f"https://pep-previews--{pr}.org.readthedocs.build"
@@ -120,13 +121,25 @@ def url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> 
     return result
 
 
-def pep(
+def open_pep(
     search: str, base_url: str = BASE_URL, pr: int | None = None, dry_run: bool = False
-) -> None:
+) -> str:
     """Open this PEP in the browser"""
-    pep_url = url(search, base_url, pr)
+    url = pep_url(search, base_url, pr)
     if not dry_run:
         import webbrowser
 
-        webbrowser.open_new_tab(pep_url)
-    print(pep_url)
+        webbrowser.open_new_tab(url)
+    print(url)
+    return url
+
+
+def open_bpo(number: int, dry_run: bool = False) -> str:
+    """Open this BPO in the browser"""
+    url = f"https://bugs.python.org/issue?@action=redirect&bpo={number}"
+    if not dry_run:
+        import webbrowser
+
+        webbrowser.open_new_tab(url)
+    print(url)
+    return url

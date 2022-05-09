@@ -18,7 +18,7 @@ import pepotron
 )
 def test_url(search: str, expected_url: str) -> None:
     # Act
-    pep_url = pepotron.url(search)
+    pep_url = pepotron.pep_url(search)
     # Assert
     assert pep_url == expected_url
 
@@ -50,7 +50,7 @@ def test_url(search: str, expected_url: str) -> None:
 )
 def test_url_base_url(search: str, base_url: str, expected_url: str) -> None:
     # Act
-    pep_url = pepotron.url(search, base_url)
+    pep_url = pepotron.pep_url(search, base_url)
     # Assert
     assert pep_url == expected_url
 
@@ -66,10 +66,16 @@ def test_url_pr(search, expected_url) -> None:
     # Arrange
     pr = 2440
     # Act
-    pep_url = pepotron.url(search, pr=pr)
+    pep_url = pepotron.pep_url(search, pr=pr)
     # Assert
     assert pep_url == expected_url
 
 
 def test_pep() -> None:
-    pepotron.pep("8", dry_run=True)
+    url = pepotron.open_pep("8", dry_run=True)
+    assert url == "https://peps.python.org/pep-0008/"
+
+
+def test_open_bpo() -> None:
+    url = pepotron.open_bpo(38374, dry_run=True)
+    assert url == "https://bugs.python.org/issue?@action=redirect&bpo=38374"

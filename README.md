@@ -110,13 +110,30 @@ https://pep-previews--2440.org.readthedocs.build
 
 <!-- [[[end]]] -->
 
+### Open a BPO issue in the browser
+
+Issues from [bugs.python.org](https://bugs.python.org/) have been migrated to
+[GitHub issues](https://github.com/python/cpython/issues) and have new numbers. This
+command will open the redirect page to take you to the new issue.
+
+<!-- [[[cog run("bpo 46208") ]]] -->
+
+```console
+$ bpo 46208
+https://bugs.python.org/issue?@action=redirect&bpo=46208
+```
+
+<!-- [[[end]]] -->
+
+This redirects to https://github.com/python/cpython/issues/90366
+
 ### Help
 
 <!-- [[[cog run("pep --help") ]]] -->
 
 ```console
 $ pep --help
-usage: pep [-h] [-u URL] [-p PR] [-n] [--clear-cache] [-v] [-V] [search ...]
+usage: pep [-h] [-u URL] [-p PR] [--clear-cache] [-n] [-v] [-V] [search ...]
 
 pepotron: CLI to open PEPs in your browser
 
@@ -128,8 +145,8 @@ options:
   -h, --help         show this help message and exit
   -u URL, --url URL  Base URL for PEPs (default: https://peps.python.org)
   -p PR, --pr PR     Open preview for python/peps PR
-  -n, --dry-run      Don't open in browser
   --clear-cache      Clear cache before running
+  -n, --dry-run      Don't open in browser
   -v, --verbose      Verbose logging
   -V, --version      show program's version number and exit
 ```

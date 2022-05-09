@@ -152,3 +152,23 @@ options:
 ```
 
 <!-- [[[end]]] -->
+
+<!-- [[[cog run("bpo --help") ]]] -->
+
+```console
+$ bpo --help
+usage: bpo [-h] [-n] [-v] [-V] bpo
+
+Open this BPO in the browser
+
+positional arguments:
+  bpo            BPO number
+
+options:
+  -h, --help     show this help message and exit
+  -n, --dry-run  Don't open in browser
+  -v, --verbose  Verbose logging
+  -V, --version  show program's version number and exit
+```
+
+<!-- [[[end]]] -->

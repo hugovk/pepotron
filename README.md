@@ -116,7 +116,7 @@ https://pep-previews--2440.org.readthedocs.build
 
 ```console
 $ pep --help
-usage: pep [-h] [-u URL] [-p PR] [-n] [--clear-cache] [-v] [-V] [search ...]
+usage: pep [-h] [-u URL] [-p PR] [--clear-cache] [-n] [-v] [-V] [search ...]
 
 pepotron: CLI to open PEPs in your browser
 
@@ -128,8 +128,8 @@ options:
   -h, --help         show this help message and exit
   -u URL, --url URL  Base URL for PEPs (default: https://peps.python.org)
   -p PR, --pr PR     Open preview for python/peps PR
-  -n, --dry-run      Don't open in browser
   --clear-cache      Clear cache before running
+  -n, --dry-run      Don't open in browser
   -v, --verbose      Verbose logging
   -V, --version      show program's version number and exit
 ```

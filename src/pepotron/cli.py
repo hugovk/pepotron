@@ -59,7 +59,8 @@ def main() -> None:
 
 def bpo() -> None:
     parser = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+        description="Open this BPO in the browser",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("bpo", type=int, help="BPO number")
     parser = add_common_arguments(parser)

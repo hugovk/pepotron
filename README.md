@@ -110,6 +110,23 @@ https://pep-previews--2440.org.readthedocs.build
 
 <!-- [[[end]]] -->
 
+### Open a BPO issue in the browser
+
+Issues from [bugs.python.org](https://bugs.python.org/) have been migrated to
+[GitHub issues](https://github.com/python/cpython/issues) and have new numbers. This
+command will open the redirect page to take you to the new issue.
+
+<!-- [[[cog run("bpo 46208") ]]] -->
+
+```console
+$ bpo 46208
+https://bugs.python.org/issue?@action=redirect&bpo=46208
+```
+
+<!-- [[[end]]] -->
+
+This redirects to https://github.com/python/cpython/issues/90366
+
 ### Help
 
 <!-- [[[cog run("pep --help") ]]] -->

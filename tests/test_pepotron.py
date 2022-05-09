@@ -73,3 +73,8 @@ def test_url_pr(search, expected_url) -> None:
 
 def test_pep() -> None:
     pepotron.pep("8", dry_run=True)
+
+
+def test_open_bpo() -> None:
+    url = pepotron.open_bpo(38374, dry_run=True)
+    assert url == "https://bugs.python.org/issue?@action=redirect&bpo=38374"

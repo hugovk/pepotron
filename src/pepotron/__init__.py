@@ -131,3 +131,14 @@ def pep(
 
         webbrowser.open_new_tab(pep_url)
     print(pep_url)
+
+
+def open_bpo(number: int, dry_run: bool = False) -> str:
+    """Open this BPO in the browser"""
+    bpo_url = f"https://bugs.python.org/issue?@action=redirect&bpo={number}"
+    if not dry_run:
+        import webbrowser
+
+        webbrowser.open_new_tab(bpo_url)
+    print(bpo_url)
+    return bpo_url

@@ -5,7 +5,7 @@ import argparse
 import atexit
 import logging
 
-from pepotron import BASE_URL, __version__, _cache, pep
+from pepotron import BASE_URL, __version__, _cache, open_bpo, pep
 
 atexit.register(_cache.clear)
 
@@ -50,6 +50,32 @@ def main() -> None:
         _cache.clear(clear_all=True)
 
     pep(search=args.search, base_url=args.url, pr=args.pr, dry_run=args.dry_run)
+
+
+def bpo() -> None:
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    parser.add_argument("bpo", type=int, help="BPO number")
+    parser.add_argument(
+        "-n", "--dry-run", action="store_true", help="Don't open in browser"
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_const",
+        dest="loglevel",
+        const=logging.INFO,
+        default=logging.WARNING,
+        help="Verbose logging",
+    )
+    parser.add_argument(
+        "-V", "--version", action="version", version=f"%(prog)s {__version__}"
+    )
+    args = parser.parse_args()
+
+    logging.basicConfig(level=args.loglevel, format="%(message)s")
+    open_bpo(number=args.bpo, dry_run=args.dry_run)
 
 
 if __name__ == "__main__":

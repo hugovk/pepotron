@@ -43,7 +43,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    logging.basicConfig(level=args.loglevel)
+    logging.basicConfig(level=args.loglevel, format="%(message)s")
     if args.search:
         args.search = " ".join(args.search)
     if args.clear_cache:

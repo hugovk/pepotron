@@ -68,6 +68,7 @@ def _download_peps_json() -> Path:
 
         _cache.save(cache_file, res)
 
+    logging.info("")
     return cache_file
 
 

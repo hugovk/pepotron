@@ -23,14 +23,13 @@ class TestCache:
     @freeze_time("2018-12-26")
     def test__cache_filename(self):
         # Arrange
-        url = "https://endoflife.date/api/python.json"
+        url = "https://peps.python.org/api/peps.json"
 
         # Act
         out = _cache.filename(url)
 
         # Assert
-        # TODO rename
-        assert str(out).endswith("2018-12-26-https-endoflife-date-api-python-json.json")
+        assert str(out).endswith("2018-12-26-https-peps-python-org-api-peps-json.json")
 
     def test__load_cache_not_exist(self):
         # Arrange

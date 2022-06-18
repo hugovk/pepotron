@@ -10,18 +10,18 @@ from pepotron import _cache
 
 
 class TestCache:
-    def setup_method(self):
+    def setup_method(self) -> None:
         # Choose a new cache dir that doesn't exist
         self.original_cache_dir = _cache.CACHE_DIR
         self.temp_dir = tempfile.TemporaryDirectory()
         _cache.CACHE_DIR = Path(self.temp_dir.name) / "pepotron"
 
-    def teardown_method(self):
+    def teardown_method(self) -> None:
         # Reset original
         _cache.CACHE_DIR = self.original_cache_dir
 
     @freeze_time("2018-12-26")
-    def test__cache_filename(self):
+    def test__cache_filename(self) -> None:
         # Arrange
         url = "https://peps.python.org/api/peps.json"
 
@@ -31,7 +31,7 @@ class TestCache:
         # Assert
         assert str(out).endswith("2018-12-26-https-peps-python-org-api-peps-json.json")
 
-    def test__load_cache_not_exist(self):
+    def test__load_cache_not_exist(self) -> None:
         # Arrange
         filename = Path("file-does-not-exist")
 
@@ -41,7 +41,7 @@ class TestCache:
         # Assert
         assert data == {}
 
-    def test__load_cache_bad_data(self):
+    def test__load_cache_bad_data(self) -> None:
         # Arrange
         with tempfile.NamedTemporaryFile(delete=False) as f:
             f.write(b"Invalid JSON!")
@@ -52,10 +52,10 @@ class TestCache:
         # Assert
         assert data == {}
 
-    def test_cache_round_trip(self):
+    def test_cache_round_trip(self) -> None:
         # Arrange
         filename = _cache.CACHE_DIR / "test_cache_round_trip.json"
-        data = {"1": "test data"}
+        data = {"1": {"authors": "bob"}}
 
         # Act
         _cache.save(filename, data)
@@ -68,7 +68,7 @@ class TestCache:
         assert new_data == data
 
     @freeze_time("2021-10-25")
-    def test__clear_cache_all(self):
+    def test__clear_cache_all(self) -> None:
         # Arrange
         # Create old cache file
         cache_file_old = _cache.CACHE_DIR / "2021-10-24-old-cache-file.json"
@@ -86,7 +86,7 @@ class TestCache:
         assert not cache_file_new.exists()
 
     @freeze_time("2021-10-25")
-    def test__clear_cache_old(self):
+    def test__clear_cache_old(self) -> None:
         # Arrange
         # Create old cache file
         cache_file_old = _cache.CACHE_DIR / "2021-10-24-old-cache-file.json"

@@ -1,9 +1,76 @@
 [build-system]
-build-backend = "setuptools.build_meta"
+build-backend = "hatchling.build"
 requires = [
-  "setuptools>=45",
-  "setuptools_scm[toml]>=6.2",
+  "hatch-vcs",
+  "hatchling",
 ]
+
+[project]
+name = "pepotron"
+description = "CLI to open PEPs in your browser"
+readme = "README.md"
+keywords = [
+  "bpo",
+  "cli",
+  "pep",
+]
+license = {text = "MIT"}
+authors = [{name = "Hugo van Kemenade"}]
+requires-python = ">=3.7"
+dependencies = [
+  "httpx>=0.22",
+  'importlib-metadata; python_version < "3.8"',
+  "platformdirs",
+  "python-slugify",
+  "thefuzz",
+]
+dynamic = [
+  "version",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+[project.optional-dependencies]
+tests = [
+  "freezegun",
+  "pytest",
+  "pytest-cov",
+]
+
+[project.urls]
+Changelog = "https://github.com/hugovk/pepotron/releases"
+Homepage = "https://github.com/hugovk/pepotron"
+Source = "https://github.com/hugovk/pepotron"
+
+[project.scripts]
+bpo = "pepotron.cli:bpo"
+pep = "pepotron.cli:main"
+
 
 [tool.black]
 target_version = ["py37"]
+
+[tool.hatch]
+version.source = "vcs"
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+addopts = "--color=yes"

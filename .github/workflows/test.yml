@@ -13,11 +13,6 @@ jobs:
       matrix:
         python-version: ["pypy-3.8", "3.7", "3.8", "3.9", "3.10", "3.11-dev"]
         os: [windows-latest, macos-latest, ubuntu-latest]
-        include:
-          # Include new variables for Codecov
-          - { codecov-flag: GHA_macOS, os: macos-latest }
-          - { codecov-flag: GHA_Ubuntu, os: ubuntu-latest }
-          - { codecov-flag: GHA_Windows, os: windows-latest }
 
     steps:
       - uses: actions/checkout@v3
@@ -27,7 +22,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
-          cache-dependency-path: "setup.py"
+          cache-dependency-path: pyproject.toml
 
       - name: Install dependencies
         run: |
@@ -45,9 +40,9 @@ jobs:
           tox -e cog
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v3.1.0
+        uses: codecov/codecov-action@v3
         with:
-          flags: ${{ matrix.codecov-flag }}
+          flags: ${{ matrix.os }}
           name: ${{ matrix.os }} Python ${{ matrix.python-version }}
 
   success:

@@ -1,6 +1,8 @@
 """
 pepotron: CLI to open PEPs in your browser
 """
+from __future__ import annotations
+
 import argparse
 import atexit
 import logging

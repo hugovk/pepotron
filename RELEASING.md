@@ -19,5 +19,5 @@
 - [ ] Check installation:
 
 ```bash
-pip3 uninstall -y pepotron && pip3 install -U pepotron
+pip3 uninstall -y pepotron && pip3 install -U pepotron && pep --version
 ```

@@ -33,7 +33,6 @@ jobs:
 
       - name: Build package
         run: |
-          python -c "import importlib.metadata; print(importlib.metadata.version('pepotron'))"
           python -m build
           twine check --strict dist/*
 

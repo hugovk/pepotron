@@ -13,7 +13,7 @@ try:
     # Python 3.8+
     import importlib.metadata as importlib_metadata
 except ImportError:
-    # Python 3.7 and lower
+    # Python 3.7
     import importlib_metadata  # type: ignore
 
 __version__ = importlib_metadata.version(__name__)
@@ -80,7 +80,7 @@ def word_search(search: str | None) -> int:
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", category=UserWarning)
-        from thefuzz import process
+        from thefuzz import process  # type: ignore
 
     with open(peps_file) as f:
         peps = json.load(f)

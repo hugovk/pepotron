@@ -64,7 +64,7 @@ def test_url_base_url(search: str, base_url: str, expected_url: str) -> None:
         (None, "https://pep-previews--2440.org.readthedocs.build"),
     ],
 )
-def test_url_pr(search, expected_url) -> None:
+def test_url_pr(search: str | None, expected_url: str) -> None:
     # Arrange
     pr = 2440
     # Act

@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     else:
         from typing_extensions import TypeAlias
 
-PepData: TypeAlias = "dict[str, dict[str, str | None]]"
+PepData: TypeAlias = "dict[str, dict[str, str]]"
 
 CACHE_DIR = Path(user_cache_dir("pepotron"))
 

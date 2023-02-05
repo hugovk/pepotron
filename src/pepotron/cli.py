@@ -12,7 +12,7 @@ from pepotron import BASE_URL, __version__, _cache, open_bpo, open_pep
 atexit.register(_cache.clear)
 
 
-def add_common_arguments(parser):
+def add_common_arguments(parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
     parser.add_argument(
         "-n", "--dry-run", action="store_true", help="Don't open in browser"
     )

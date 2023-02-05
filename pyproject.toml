@@ -17,16 +17,6 @@ keywords = [
 license = {text = "MIT"}
 authors = [{name = "Hugo van Kemenade"}]
 requires-python = ">=3.7"
-dependencies = [
-  "httpx>=0.22",
-  'importlib-metadata; python_version < "3.8"',
-  "platformdirs",
-  "python-slugify",
-  "thefuzz",
-]
-dynamic = [
-  "version",
-]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -42,6 +32,16 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
+]
+dynamic = [
+  "version",
+]
+dependencies = [
+  "httpx>=0.22",
+  'importlib-metadata; python_version < "3.8"',
+  "platformdirs",
+  "python-slugify",
+  "thefuzz",
 ]
 [project.optional-dependencies]
 tests = [
@@ -59,9 +59,6 @@ Source = "https://github.com/hugovk/pepotron"
 bpo = "pepotron.cli:bpo"
 pep = "pepotron.cli:main"
 
-
-[tool.black]
-target_version = ["py37"]
 
 [tool.hatch]
 version.source = "vcs"

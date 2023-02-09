@@ -16,6 +16,8 @@ import pepotron
         ("2.7", "https://peps.python.org/pep-0373/"),
         (None, "https://peps.python.org"),
         ("dead batteries", "https://peps.python.org/pep-0594/"),
+        ("release", "https://peps.python.org/topic/release/"),
+        ("typing", "https://peps.python.org/topic/typing/"),
     ],
 )
 def test_url(search: str, expected_url: str) -> None:

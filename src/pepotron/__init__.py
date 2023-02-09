@@ -22,6 +22,7 @@ BASE_URL = "https://peps.python.org"
 JSON_PATH = "/api/peps.json"
 USER_AGENT = f"pepotron/{__version__}"
 
+TOPICS = ("governance", "packaging", "release", "typing")
 VERSION_TO_PEP = {
     "1.6": 160,
     "2.0": 200,
@@ -106,6 +107,10 @@ def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None)
     result = base_url.rstrip("/")
 
     if search:
+        if search.lower() in TOPICS:
+            result += f"/topic/{search}/"
+            return result
+
         try:
             # pep 8
             number = int(search)

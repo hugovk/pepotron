@@ -79,6 +79,17 @@ https://peps.python.org/pep-0594/
 
 <!-- [[[end]]] -->
 
+### Open a PEP topic
+
+<!-- [[[cog run("pep governance") ]]] -->
+
+```console
+$ pep governance
+https://peps.python.org/topic/governance/
+```
+
+<!-- [[[end]]] -->
+
 ### Open a build preview of a python/peps PR
 
 <!-- [[[cog run("pep 594 --pr 2440") ]]] -->
@@ -138,8 +149,7 @@ usage: pep [-h] [-u URL] [-p PR] [--clear-cache] [-n] [-v] [-V] [search ...]
 pepotron: CLI to open PEPs in your browser
 
 positional arguments:
-  search             PEP number, or Python version for its schedule, or words
-                     from title
+  search             PEP number, or Python version for its schedule, or words from title
 
 options:
   -h, --help         show this help message and exit

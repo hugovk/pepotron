@@ -50,16 +50,13 @@ tests = [
   "pytest",
   "pytest-cov",
 ]
-
 [project.urls]
 Changelog = "https://github.com/hugovk/pepotron/releases"
 Homepage = "https://github.com/hugovk/pepotron"
 Source = "https://github.com/hugovk/pepotron"
-
 [project.scripts]
 bpo = "pepotron.cli:bpo"
 pep = "pepotron.cli:main"
-
 
 [tool.hatch]
 version.source = "vcs"

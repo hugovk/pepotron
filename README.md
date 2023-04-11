@@ -117,6 +117,15 @@ https://peps.python.org/topic/typing/
 
 <!-- [[[end]]] -->
 
+<!-- [[[cog run("pep topics") ]]] -->
+
+```console
+$ pep topics
+https://peps.python.org/topic/
+```
+
+<!-- [[[end]]] -->
+
 ### Open a build preview of a python/peps PR
 
 <!-- [[[cog run("pep 594 --pr 2440") ]]] -->

@@ -107,6 +107,8 @@ def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None)
     result = base_url.rstrip("/")
 
     if search:
+        if search.lower() in ("topic", "topics"):
+            return result + "/topic/"
         if search.lower() in TOPICS:
             result += f"/topic/{search}/"
             return result

@@ -90,6 +90,33 @@ https://peps.python.org/topic/governance/
 
 <!-- [[[end]]] -->
 
+<!-- [[[cog run("pep packaging") ]]] -->
+
+```console
+$ pep packaging
+https://peps.python.org/topic/packaging/
+```
+
+<!-- [[[end]]] -->
+
+<!-- [[[cog run("pep release") ]]] -->
+
+```console
+$ pep release
+https://peps.python.org/topic/release/
+```
+
+<!-- [[[end]]] -->
+
+<!-- [[[cog run("pep typing") ]]] -->
+
+```console
+$ pep typing
+https://peps.python.org/topic/typing/
+```
+
+<!-- [[[end]]] -->
+
 ### Open a build preview of a python/peps PR
 
 <!-- [[[cog run("pep 594 --pr 2440") ]]] -->

@@ -106,25 +106,27 @@ def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None)
 
     result = base_url.rstrip("/")
 
-    if search:
-        if search.lower() in TOPICS:
-            result += f"/topic/{search}/"
-            return result
+    if not search:
+        return result
 
+    if search.lower() in ("topic", "topics"):
+        return result + "/topic/"
+
+    if search.lower() in TOPICS:
+        return result + f"/topic/{search}/"
+
+    try:
+        # pep 8
+        number = int(search)
+    except ValueError:
         try:
-            # pep 8
-            number = int(search)
-        except ValueError:
-            try:
-                # pep 3.11
-                number = VERSION_TO_PEP[search]
-            except KeyError:
-                # pep "dead batteries"
-                number = word_search(search)
+            # pep 3.11
+            number = VERSION_TO_PEP[search]
+        except KeyError:
+            # pep "dead batteries"
+            number = word_search(search)
 
-        result += f"/pep-{number:0>4}/"
-
-    return result
+    return result + f"/pep-{number:0>4}/"
 
 
 def open_pep(

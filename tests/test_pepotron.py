@@ -77,6 +77,20 @@ def test_url_pr(search: str | None, expected_url: str) -> None:
     assert pep_url == expected_url
 
 
+def test__download_peps_json_ok() -> None:
+    # Arrange
+    pepotron._cache.clear(clear_all=True)
+    # Act
+    filename = pepotron._download_peps_json()
+    # Assert
+    assert filename.suffix == ".json"
+
+
+def test__download_peps_json_error() -> None:
+    with pytest.raises(RuntimeError):
+        pepotron._download_peps_json("https://httpstat.us/404")
+
+
 def test_pep() -> None:
     url = pepotron.open_pep("8", dry_run=True)
     assert url == "https://peps.python.org/pep-0008/"

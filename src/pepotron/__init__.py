@@ -43,26 +43,27 @@ VERSION_TO_PEP = {
 }
 
 
-def _download_peps_json() -> Path:
-    json_url = BASE_URL + JSON_PATH
+def _download_peps_json(json_url: str = BASE_URL + JSON_PATH) -> Path:
     cache_file = _cache.filename(json_url)
     logging.info(f"Cache file: {cache_file}")
 
-    res = _cache.load(cache_file)
-    if res == {}:
+    data = _cache.load(cache_file)
+    if data == {}:
         # No cache, or couldn't load cache
-        import httpx
+        import urllib3
 
-        r = httpx.get(json_url, headers={"User-Agent": USER_AGENT})
+        resp = urllib3.request("GET", json_url, headers={"User-Agent": USER_AGENT})
 
         # Raise if we made a bad request
         # (4XX client error or 5XX server error response)
-        logging.info(f"HTTP status code: {r.status_code}")
-        r.raise_for_status()
+        logging.info(f"HTTP status code: {resp.status}")
+        if resp.status != 200:
+            msg = f"Unable to download {json_url}: status {resp.status}"
+            raise RuntimeError(msg)
 
-        res = r.json()
+        data = resp.json()
 
-        _cache.save(cache_file, res)
+        _cache.save(cache_file, data)
 
     logging.info("")
     return cache_file

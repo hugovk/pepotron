@@ -4,6 +4,7 @@ CLI to open PEPs in your browser
 from __future__ import annotations
 
 import importlib.metadata
+import json
 import logging
 import warnings
 from pathlib import Path
@@ -43,6 +44,23 @@ VERSION_TO_PEP = {
 }
 
 
+def _get_from_url(json_url: str) -> _cache.PepData:
+    import urllib.request
+
+    request = urllib.request.Request(json_url, headers={"User-Agent": USER_AGENT})
+    r = urllib.request.urlopen(request)
+
+    # Raise if we made a bad request
+    # (4XX client error or 5XX server error response)
+    logging.info(f"HTTP status code: {r.status}")
+    if r.status != 200:
+        msg = f"Unable to download {json_url}: status {r.status}"
+        raise RuntimeError(msg)
+
+    res: _cache.PepData = json.loads(r.read().decode())
+    return res
+
+
 def _download_peps_json() -> Path:
     json_url = BASE_URL + JSON_PATH
     cache_file = _cache.filename(json_url)
@@ -51,16 +69,7 @@ def _download_peps_json() -> Path:
     res = _cache.load(cache_file)
     if res == {}:
         # No cache, or couldn't load cache
-        import httpx
-
-        r = httpx.get(json_url, headers={"User-Agent": USER_AGENT})
-
-        # Raise if we made a bad request
-        # (4XX client error or 5XX server error response)
-        logging.info(f"HTTP status code: {r.status_code}")
-        r.raise_for_status()
-
-        res = r.json()
+        res = _get_from_url(json_url)
 
         _cache.save(cache_file, res)
 
@@ -69,8 +78,6 @@ def _download_peps_json() -> Path:
 
 
 def word_search(search: str | None) -> int:
-    import json
-
     peps_file = _download_peps_json()
 
     with warnings.catch_warnings():

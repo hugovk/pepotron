@@ -37,7 +37,6 @@ dynamic = [
   "version",
 ]
 dependencies = [
-  "httpx>=0.22",
   "platformdirs",
   "python-slugify",
   "thefuzz",

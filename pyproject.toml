@@ -36,10 +36,10 @@ dynamic = [
   "version",
 ]
 dependencies = [
-  "httpx>=0.22",
   "platformdirs",
   "python-slugify",
   "thefuzz",
+  "urllib3>=2",
 ]
 [project.optional-dependencies]
 tests = [

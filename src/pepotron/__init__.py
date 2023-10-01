@@ -6,6 +6,7 @@ from __future__ import annotations
 import importlib.metadata
 import logging
 from pathlib import Path
+from typing import Any
 
 from . import _cache
 
@@ -117,18 +118,20 @@ def _next_available_pep() -> int:
     return next_pep
 
 
-def _get_pr_peps() -> set[int]:
-    import re
-
+def _get_github_prs() -> list[Any]:
     from ghapi.all import GhApi  # type: ignore
 
     api = GhApi(owner="python", repo="peps", authenticate=False)
-    prs = api.pulls.list()
+    return api.pulls.list()  # type: ignore[no-any-return]
+
+
+def _get_pr_peps() -> set[int]:
+    import re
 
     pr_title_regex = re.compile(r"^PEP (\d+): .*")
 
     numbers = set()
-    for pr in prs:
+    for pr in _get_github_prs():
         if match := re.search(pr_title_regex, pr.title):
             number = match[1]
             numbers.add(int(number))

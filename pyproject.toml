@@ -38,7 +38,7 @@ dynamic = [
 dependencies = [
   "platformdirs",
   "python-slugify",
-  "thefuzz",
+  "rapidfuzz",
   "urllib3>=2",
 ]
 [project.optional-dependencies]

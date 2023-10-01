@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import importlib.metadata
 import logging
-import warnings
 from pathlib import Path
 
 from pepotron import _cache
@@ -75,24 +74,26 @@ def word_search(search: str | None) -> int:
 
     peps_file = _download_peps_json()
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", category=UserWarning)
-        from thefuzz import process  # type: ignore
+    from rapidfuzz import process
 
     with open(peps_file) as f:
         peps = json.load(f)
 
-    # We only want to search titles
-    peps = ((number, details["title"]) for number, details in peps.items())
+    # Dict of title->number
+    titles = {details["title"]: number for number, details in peps.items()}
 
-    result: list[tuple[tuple[str, str], int]] = process.extract(search, peps)
-    print("Score\tResult")
-    for match, score in result:
-        print(f"{score}\tPEP {match[0]}: {match[1]}")
+    result = process.extract(search, titles.keys())
+    print("Score   Result")
+    for title, score, _ in result:
+        print(f"{round(score):<8}PEP {titles[title]}: {title}")
     print()
 
-    # Top result -> match -> PEP number
-    return int(result[0][0][0])
+    # Find PEP number of top match
+    number: int = next(
+        number for number, details in peps.items() if details["title"] == result[0][0]
+    )
+
+    return number
 
 
 def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> str:

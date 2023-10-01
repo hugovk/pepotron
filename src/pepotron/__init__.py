@@ -121,7 +121,7 @@ def _get_github_prs() -> list[Any]:
     from ghapi.all import GhApi  # type: ignore
 
     api = GhApi(owner="python", repo="peps", authenticate=False)
-    return api.pulls.list()  # type: ignore[no-any-return]
+    return api.pulls.list(per_page=100)  # type: ignore[no-any-return]
 
 
 def _get_pr_peps() -> set[int]:

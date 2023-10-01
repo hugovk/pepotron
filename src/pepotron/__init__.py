@@ -10,19 +10,6 @@ from typing import Any
 
 from . import _cache
 
-try:
-    # Python 3.10+
-    from itertools import pairwise
-except ImportError:
-    # Python 3.9 and below
-    def pairwise(iterable):  # type: ignore
-        from itertools import tee
-
-        a, b = tee(iterable)
-        next(b, None)
-        return zip(a, b)
-
-
 __version__ = importlib.metadata.version(__name__)
 
 BASE_URL = "https://peps.python.org"
@@ -101,6 +88,18 @@ def _get_published_peps() -> set[int]:
 
 
 def _next_available_pep() -> int:
+    try:
+        # Python 3.10+
+        from itertools import pairwise
+    except ImportError:
+        # Python 3.9 and below
+        def pairwise(iterable):  # type: ignore
+            from itertools import tee
+
+            a, b = tee(iterable)
+            next(b, None)
+            return zip(a, b)
+
     published = _get_published_peps()
     proposed = _get_pr_peps()
     combined = published | proposed

@@ -83,9 +83,9 @@ def word_search(search: str | None) -> int:
     titles = {details["title"]: number for number, details in peps.items()}
 
     result = process.extract(search, titles.keys())
-    print("Score\tResult")
+    print("Score   Result")
     for title, score, _ in result:
-        print(f"{round(score)}\tPEP {titles[title]}: {title}")
+        print(f"{round(score):<8}PEP {titles[title]}: {title}")
     print()
 
     # Find PEP number of top match

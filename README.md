@@ -67,12 +67,12 @@ https://peps.python.org/pep-0664/
 
 ```console
 $ pep dead batteries
-Score	Result
-90	PEP 594: Removing dead batteries from the standard library
-58	PEP 415: Implement context suppression with exception attributes
-55	PEP 476: Enabling certificate verification by default for stdlib http clients
-55	PEP 500: A protocol for delegating datetime methods to their tzinfo implementations
-55	PEP 696: Type defaults for TypeVarLikes
+Score   Result
+90      PEP 594: Removing dead batteries from the standard library
+58      PEP 415: Implement context suppression with exception attributes
+55      PEP 476: Enabling certificate verification by default for stdlib http clients
+55      PEP 500: A protocol for delegating datetime methods to their tzinfo implementations
+55      PEP 696: Type defaults for TypeVarLikes
 
 https://peps.python.org/pep-0594/
 ```

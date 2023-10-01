@@ -7,7 +7,7 @@ import argparse
 import atexit
 import logging
 
-from pepotron import BASE_URL, __version__, _cache, open_bpo, open_pep
+from . import BASE_URL, __version__, _cache, open_bpo, open_pep
 
 atexit.register(_cache.clear)
 

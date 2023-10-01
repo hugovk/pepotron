@@ -7,7 +7,20 @@ import importlib.metadata
 import logging
 from pathlib import Path
 
-from pepotron import _cache
+from . import _cache
+
+try:
+    # Python 3.10+
+    from itertools import pairwise
+except ImportError:
+    # Python 3.9 and below
+    def pairwise(iterable):  # type: ignore
+        from itertools import tee
+
+        a, b = tee(iterable)
+        next(b, None)
+        return zip(a, b)
+
 
 __version__ = importlib.metadata.version(__name__)
 
@@ -69,15 +82,64 @@ def _download_peps_json(json_url: str = BASE_URL + JSON_PATH) -> Path:
     return cache_file
 
 
-def word_search(search: str | None) -> int:
+def _get_peps() -> _cache.PepData:
     import json
 
     peps_file = _download_peps_json()
 
+    with open(peps_file) as f:
+        peps: _cache.PepData = json.load(f)
+
+    return peps
+
+
+def _get_published_peps() -> set[int]:
+    peps = _get_peps()
+    numbers = {int(number) for number, details in peps.items()}
+    return numbers
+
+
+def _next_available_pep() -> int:
+    published = _get_published_peps()
+    proposed = _get_pr_peps()
+    combined = published | proposed
+    numbers = sorted(combined)
+
+    start = 400
+    next_pep = -1
+    for x, y in pairwise(numbers):
+        if x < start:
+            continue
+        if x + 1 != y:
+            next_pep = x + 1
+            break
+
+    return next_pep
+
+
+def _get_pr_peps() -> set[int]:
+    import re
+
+    from ghapi.all import GhApi  # type: ignore
+
+    api = GhApi(owner="python", repo="peps", authenticate=False)
+    prs = api.pulls.list()
+
+    pr_title_regex = re.compile(r"^PEP (\d+): .*")
+
+    numbers = set()
+    for pr in prs:
+        if match := re.search(pr_title_regex, pr.title):
+            number = match[1]
+            numbers.add(int(number))
+
+    return numbers
+
+
+def word_search(search: str | None) -> int:
     from rapidfuzz import process
 
-    with open(peps_file) as f:
-        peps = json.load(f)
+    peps = _get_peps()
 
     # Dict of title->number
     titles = {details["title"]: number for number, details in peps.items()}
@@ -89,11 +151,11 @@ def word_search(search: str | None) -> int:
     print()
 
     # Find PEP number of top match
-    number: int = next(
+    number: str = next(
         number for number, details in peps.items() if details["title"] == result[0][0]
     )
 
-    return number
+    return int(number)
 
 
 def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> str:
@@ -111,6 +173,9 @@ def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None)
 
     if search.lower() in TOPICS:
         return result + f"/topic/{search}/"
+
+    if search.lower() == "next":
+        return f"Next available PEP: {_next_available_pep()}"
 
     try:
         # pep 8

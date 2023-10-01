@@ -29,6 +29,15 @@ def test_url(search: str, expected_url: str) -> None:
     assert pep_url == expected_url
 
 
+def test_next() -> None:
+    # Act
+    pep_url = pepotron.pep_url("next")
+
+    # Assert
+    assert pep_url.startswith("Next available PEP: ")
+    assert pep_url.split()[-1].isdigit()
+
+
 @pytest.mark.parametrize(
     "search, base_url, expected_url",
     [

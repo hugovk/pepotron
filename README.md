@@ -157,6 +157,20 @@ https://pep-previews--2440.org.readthedocs.build
 
 <!-- [[[end]]] -->
 
+### Find the next available PEP number
+
+Check published PEPs and [open PRs](https://github.com/python/peps/pulls) to find the
+next available PEP number.
+
+<!-- [[[cog run("pep next") ]]] -->
+
+```console
+$ pep next
+Next available PEP: 730
+```
+
+<!-- [[[end]]] -->
+
 ### Open a BPO issue in the browser
 
 Issues from [bugs.python.org](https://bugs.python.org/) have been migrated to

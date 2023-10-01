@@ -11,6 +11,10 @@ exclude_lines =
     def main
 
     if TYPE_CHECKING:
+    if not dry_run:
+
+    except ImportError:
+    except OSError:
 
 [run]
 omit =

@@ -3,6 +3,8 @@ Unit tests
 """
 from __future__ import annotations
 
+from collections import namedtuple
+
 import pytest
 
 import pepotron
@@ -27,6 +29,24 @@ def test_url(search: str, expected_url: str) -> None:
     pep_url = pepotron.pep_url(search)
     # Assert
     assert pep_url == expected_url
+
+
+def test_next() -> None:
+    # Arrange
+    Pull = namedtuple("Pull", ["title"])
+    prs = [
+        Pull(title="PEP 716: Seven One Six"),
+        Pull(title="PEP 717: Seven One Seven"),
+    ]
+    # mock _get_github_prs:
+    pepotron._get_github_prs = lambda: prs
+
+    # Act
+    next_pep = pepotron.pep_url("next")
+
+    # Assert
+    assert next_pep.startswith("Next available PEP: ")
+    assert next_pep.split()[-1].isdigit()
 
 
 @pytest.mark.parametrize(

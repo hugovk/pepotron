@@ -36,6 +36,7 @@ dynamic = [
   "version",
 ]
 dependencies = [
+  "ghapi",
   "platformdirs",
   "python-slugify",
   "rapidfuzz",

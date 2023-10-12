@@ -198,7 +198,7 @@ def open_pep(
 ) -> str:
     """Open this PEP in the browser"""
     url = pep_url(search, base_url, pr)
-    if not dry_run:
+    if not dry_run and "Next available PEP: " not in url:
         import webbrowser
 
         webbrowser.open_new_tab(url)

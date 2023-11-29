@@ -38,7 +38,8 @@ def main() -> None:
     parser.add_argument(
         "search",
         nargs="*",
-        help="PEP number, or Python version for its schedule, or words from title",
+        help="PEP number, or Python version for its schedule, or words from title, "
+        "or 'next' to find next available PEP number",
     )
     parser.add_argument(
         "-u", "--url", default=BASE_URL, help=f"Base URL for PEPs (default: {BASE_URL})"

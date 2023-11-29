@@ -108,7 +108,7 @@ def test__download_peps_json_ok() -> None:
 
 def test__download_peps_json_error() -> None:
     with pytest.raises(RuntimeError):
-        pepotron._download_peps_json("https://httpstat.us/404")
+        pepotron._download_peps_json("https://httpbin.org/status/404")
 
 
 def test_pep() -> None:

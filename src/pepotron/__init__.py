@@ -93,7 +93,7 @@ def _next_available_pep() -> int:
         from itertools import pairwise
     except ImportError:
         # Python 3.9 and below
-        def pairwise(iterable):  # type: ignore
+        def pairwise(iterable):  # type: ignore[no-redef,no-untyped-def]
             from itertools import tee
 
             a, b = tee(iterable)
@@ -118,7 +118,7 @@ def _next_available_pep() -> int:
 
 
 def _get_github_prs() -> list[Any]:
-    from ghapi.all import GhApi  # type: ignore
+    from ghapi.all import GhApi  # type: ignore[import-not-found]
 
     api = GhApi(owner="python", repo="peps", authenticate=False)
     return api.pulls.list(per_page=100)  # type: ignore[no-any-return]

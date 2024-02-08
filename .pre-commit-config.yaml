@@ -28,14 +28,7 @@ repos:
       - id: mypy
         args: [--strict, --pretty, --show-error-codes]
         additional_dependencies:
-          [
-            platformdirs,
-            pytest,
-            rapidfuzz,
-            types-freezegun,
-            types-python-slugify,
-            urllib3,
-          ]
+          [platformdirs, pytest, python-slugify, rapidfuzz, types-freezegun, urllib3]
 
   - repo: https://github.com/tox-dev/pyproject-fmt
     rev: 1.5.3

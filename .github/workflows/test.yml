@@ -2,17 +2,26 @@ name: Test
 
 on: [push, pull_request, workflow_dispatch]
 
+permissions:
+  contents: read
+
 env:
   FORCE_COLOR: 1
+  PIP_DISABLE_PIP_VERSION_CHECK: 1
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: "${{ matrix.os }}-${{ matrix.os-version || 'latest' }}"
     strategy:
       fail-fast: false
       matrix:
         python-version: ["pypy3.10", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [Windows, macOS, Ubuntu]
+        # Python 3.8 and 3.9 are on macos-13 but not macos-latest (macos-14-arm64)
+        # https://github.com/actions/setup-python/issues/696#issuecomment-1637587760
+        include:
+          - { python-version: "3.8", os: "macOS", os-version: "13" }
+          - { python-version: "3.9", os: "macOS", os-version: "13" }
 
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +36,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install -U pip
-          python -m pip install -U wheel
           python -m pip install -U tox
 
       - name: Tox tests
@@ -44,7 +52,7 @@ jobs:
           tox -e cog
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v3.1.5
         with:
           flags: ${{ matrix.os }}
           name: ${{ matrix.os }} Python ${{ matrix.python-version }}

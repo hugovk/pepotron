@@ -14,8 +14,10 @@ keywords = [
   "cli",
   "pep",
 ]
-license = {text = "MIT"}
-authors = [{name = "Hugo van Kemenade"}]
+license = { text = "MIT" }
+authors = [
+  { name = "Hugo van Kemenade" },
+]
 requires-python = ">=3.8"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -29,7 +31,6 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
@@ -43,19 +44,16 @@ dependencies = [
   "rapidfuzz",
   "urllib3>=2",
 ]
-[project.optional-dependencies]
-tests = [
+optional-dependencies.tests = [
   "freezegun",
   "pytest",
   "pytest-cov",
 ]
-[project.urls]
-Changelog = "https://github.com/hugovk/pepotron/releases"
-Homepage = "https://github.com/hugovk/pepotron"
-Source = "https://github.com/hugovk/pepotron"
-[project.scripts]
-bpo = "pepotron.cli:bpo"
-pep = "pepotron.cli:main"
+urls.Changelog = "https://github.com/hugovk/pepotron/releases"
+urls.Homepage = "https://github.com/hugovk/pepotron"
+urls.Source = "https://github.com/hugovk/pepotron"
+scripts.bpo = "pepotron.cli:bpo"
+scripts.pep = "pepotron.cli:main"
 
 [tool.hatch]
 version.source = "vcs"
@@ -66,31 +64,32 @@ local_scheme = "no-local-version"
 [tool.ruff]
 fix = true
 
-[tool.ruff.lint]
-select = [
-  "C4", # flake8-comprehensions
-  "E", # pycodestyle errors
-  "EM", # flake8-errmsg
-  "F", # pyflakes errors
-  "I", # isort
-  "ISC", # flake8-implicit-str-concat
-  "LOG", # flake8-logging
-  "PGH", # pygrep-hooks
+lint.select = [
+  "C4",     # flake8-comprehensions
+  "E",      # pycodestyle errors
+  "EM",     # flake8-errmsg
+  "F",      # pyflakes errors
+  "I",      # isort
+  "ISC",    # flake8-implicit-str-concat
+  "LOG",    # flake8-logging
+  "PGH",    # pygrep-hooks
   "RUF100", # unused noqa (yesqa)
-  "UP", # pyupgrade
-  "W", # pycodestyle warnings
-  "YTT", # flake8-2020
+  "UP",     # pyupgrade
+  "W",      # pycodestyle warnings
+  "YTT",    # flake8-2020
 ]
-extend-ignore = [
+lint.extend-ignore = [
   "E203", # Whitespace before ':'
   "E221", # Multiple spaces before operator
   "E226", # Missing whitespace around arithmetic operator
   "E241", # Multiple spaces after ','
 ]
-
-[tool.ruff.lint.isort]
-known-first-party = ["pepotron"]
-required-imports = ["from __future__ import annotations"]
+lint.isort.known-first-party = [
+  "pepotron",
+]
+lint.isort.required-imports = [
+  "from __future__ import annotations",
+]
 
 [tool.pytest.ini_options]
 addopts = "--color=yes"

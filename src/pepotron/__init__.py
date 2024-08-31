@@ -4,14 +4,13 @@ CLI to open PEPs in your browser
 
 from __future__ import annotations
 
-import importlib.metadata
 import logging
 from pathlib import Path
 from typing import Any
 
-from . import _cache
+from . import _cache, _version
 
-__version__ = importlib.metadata.version(__name__)
+__version__ = _version.__version__
 
 BASE_URL = "https://peps.python.org"
 JSON_PATH = "/api/peps.json"

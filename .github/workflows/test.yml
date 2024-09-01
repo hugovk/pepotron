@@ -11,17 +11,12 @@ env:
 
 jobs:
   test:
-    runs-on: "${{ matrix.os }}-${{ matrix.os-version || 'latest' }}"
+    runs-on: "${{ matrix.os }}-latest"
     strategy:
       fail-fast: false
       matrix:
         python-version: ["pypy3.10", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
         os: [Windows, macOS, Ubuntu]
-        # Python 3.8 and 3.9 are on macos-13 but not macos-latest (macos-14-arm64)
-        # https://github.com/actions/setup-python/issues/696#issuecomment-1637587760
-        include:
-          - { python-version: "3.8", os: "macOS", os-version: "13" }
-          - { python-version: "3.9", os: "macOS", os-version: "13" }
 
     steps:
       - uses: actions/checkout@v4

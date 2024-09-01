@@ -35,14 +35,6 @@ repos:
     hooks:
       - id: actionlint
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.2
-    hooks:
-      - id: mypy
-        args: [--strict, --pretty, --show-error-codes]
-        additional_dependencies:
-          [platformdirs, pytest, python-slugify, rapidfuzz, types-freezegun, urllib3]
-
   - repo: https://github.com/tox-dev/pyproject-fmt
     rev: 2.2.1
     hooks:

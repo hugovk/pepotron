@@ -26,12 +26,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-          cache: pip
-      - name: Install dependencies
-        run: |
-          python3 -m pip install -U tox
+      - name: Install uv
+        uses: hynek/setup-cached-uv@v2
       - name: Mypy
-        run: tox -e mypy
+        run: uvx --with tox-uv tox -e mypy

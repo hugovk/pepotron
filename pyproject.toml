@@ -51,6 +51,7 @@ urls.Homepage = "https://github.com/hugovk/pepotron"
 urls.Source = "https://github.com/hugovk/pepotron"
 scripts.bpo = "pepotron.cli:bpo"
 scripts.pep = "pepotron.cli:main"
+scripts.pepotron = "pepotron.cli:main"
 
 [tool.hatch]
 version.source = "vcs"

@@ -38,6 +38,8 @@ python3 -m pip install .
 
 ### Open a PEP
 
+Run `pep` or `pepotron`, they do the same thing.
+
 <!-- [[[cog
 from pepotron.scripts.run_command import run
 run("pep 8")
@@ -49,6 +51,15 @@ https://peps.python.org/pep-0008/
 ```
 
 <!-- [[[end]]] -->
+
+```console
+$ # Or:
+$ pepotron 8
+https://peps.python.org/pep-0008/
+$ # Or:
+$ uvx pepotron 8
+https://peps.python.org/pep-0008/
+```
 
 ### Open release schedule PEP for a Python version
 
@@ -69,10 +80,10 @@ https://peps.python.org/pep-0664/
 $ pep dead batteries
 Score   Result
 90      PEP 594: Removing dead batteries from the standard library
+61      PEP 767: Annotating Read-Only Attributes
 58      PEP 415: Implement context suppression with exception attributes
 55      PEP 476: Enabling certificate verification by default for stdlib http clients
 55      PEP 500: A protocol for delegating datetime methods to their tzinfo implementations
-55      PEP 696: Type defaults for TypeVarLikes
 
 https://peps.python.org/pep-0594/
 ```
@@ -166,7 +177,7 @@ next available PEP number.
 
 ```console
 $ pep next
-Next available PEP: 730
+Next available PEP: 769
 ```
 
 <!-- [[[end]]] -->
@@ -199,16 +210,17 @@ usage: pep [-h] [-u URL] [-p PR] [--clear-cache] [-n] [-v] [-V] [search ...]
 pepotron: CLI to open PEPs in your browser
 
 positional arguments:
-  search             PEP number, or Python version for its schedule, or words from title
+  search         PEP number, or Python version for its schedule, or words from title, or 'next' to
+                 find next available PEP number
 
 options:
-  -h, --help         show this help message and exit
-  -u URL, --url URL  Base URL for PEPs (default: https://peps.python.org)
-  -p PR, --pr PR     Open preview for python/peps PR
-  --clear-cache      Clear cache before running
-  -n, --dry-run      Don't open in browser
-  -v, --verbose      Verbose logging
-  -V, --version      show program's version number and exit
+  -h, --help     show this help message and exit
+  -u, --url URL  Base URL for PEPs (default: https://peps.python.org)
+  -p, --pr PR    Open preview for python/peps PR
+  --clear-cache  Clear cache before running
+  -n, --dry-run  Don't open in browser
+  -v, --verbose  Verbose logging
+  -V, --version  show program's version number and exit
 ```
 
 <!-- [[[end]]] -->

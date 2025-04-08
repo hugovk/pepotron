@@ -23,6 +23,8 @@ PepData: TypeAlias = "dict[str, dict[str, str]]"
 
 CACHE_DIR = Path(user_cache_dir("pepotron"))
 
+logger = logging.getLogger(__name__)
+
 
 def filename(url: str) -> Path:
     """yyyy-mm-dd-url-slug.json"""
@@ -38,7 +40,7 @@ def load(cache_file: Path) -> PepData:
     if not cache_file.exists():
         return {}
 
-    logging.info("Cache file exists")
+    logger.info("Cache file exists")
     with cache_file.open("r") as f:
         try:
             data: PepData = json.load(f)

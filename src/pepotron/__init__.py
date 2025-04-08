@@ -45,9 +45,12 @@ VERSION_TO_PEP = {
 }
 
 
+logger = logging.getLogger(__name__)
+
+
 def _download_peps_json(json_url: str = BASE_URL + JSON_PATH) -> Path:
     cache_file = _cache.filename(json_url)
-    logging.info("Cache file: %s", cache_file)
+    logger.info("Cache file: %s", cache_file)
 
     data = _cache.load(cache_file)
     if data == {}:
@@ -58,7 +61,7 @@ def _download_peps_json(json_url: str = BASE_URL + JSON_PATH) -> Path:
 
         # Raise if we made a bad request
         # (4XX client error or 5XX server error response)
-        logging.info("HTTP status code: %s", resp.status)
+        logger.info("HTTP status code: %s", resp.status)
         if resp.status != 200:
             msg = f"Unable to download {json_url}: status {resp.status}"
             raise RuntimeError(msg)
@@ -67,7 +70,7 @@ def _download_peps_json(json_url: str = BASE_URL + JSON_PATH) -> Path:
 
         _cache.save(cache_file, data)
 
-    logging.info("")
+    logger.info("")
     return cache_file
 
 

@@ -7,17 +7,13 @@ from __future__ import annotations
 import datetime as dt
 import json
 import logging
-import sys
 from pathlib import Path
-from typing import TYPE_CHECKING
 
 from platformdirs import user_cache_dir
 
+TYPE_CHECKING = False
 if TYPE_CHECKING:
-    if sys.version_info >= (3, 10):
-        from typing import TypeAlias
-    else:
-        from typing_extensions import TypeAlias
+    from typing import TypeAlias
 
 PepData: TypeAlias = "dict[str, dict[str, str]]"
 

@@ -40,17 +40,32 @@ dependencies = [
   "rapidfuzz",
   "urllib3>=2",
 ]
-optional-dependencies.tests = [
-  "freezegun",
-  "pytest",
-  "pytest-cov",
-]
 urls.Changelog = "https://github.com/hugovk/pepotron/releases"
 urls.Homepage = "https://github.com/hugovk/pepotron"
 urls.Source = "https://github.com/hugovk/pepotron"
 scripts.bpo = "pepotron.cli:bpo"
 scripts.pep = "pepotron.cli:main"
 scripts.pepotron = "pepotron.cli:main"
+
+[dependency-groups]
+dev = [
+  { include-group = "tests" },
+  { include-group = "typing" },
+]
+tests = [
+  "freezegun",
+  "pytest",
+  "pytest-cov",
+]
+typing = [
+  "mypy==1.12",
+  "platformdirs",
+  "pytest",
+  "python-slugify",
+  "rapidfuzz",
+  "types-freezegun",
+  "urllib3",
+]
 
 [tool.hatch]
 version.source = "vcs"

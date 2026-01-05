@@ -36,7 +36,6 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.color = True  # type: ignore[attr-defined]
     parser.add_argument(
         "search",
         nargs="*",

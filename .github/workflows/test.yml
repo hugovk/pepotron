@@ -2,8 +2,7 @@ name: Test
 
 on: [push, pull_request, workflow_dispatch]
 
-permissions:
-  contents: read
+permissions: {}
 
 env:
   FORCE_COLOR: 1
@@ -19,6 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
@@ -27,7 +28,7 @@ jobs:
           allow-prereleases: true
 
       - name: Install uv
-        uses: hynek/setup-cached-uv@v2
+        uses: astral-sh/setup-uv@v7
 
       - name: Tox tests
         run: |

@@ -5,6 +5,7 @@ CLI to open PEPs in your browser
 from __future__ import annotations
 
 import logging
+from itertools import pairwise
 from pathlib import Path
 from typing import Any
 
@@ -93,18 +94,6 @@ def _get_published_peps() -> set[int]:
 
 
 def _next_available_pep() -> int:
-    try:
-        # Python 3.10+
-        from itertools import pairwise
-    except ImportError:
-        # Python 3.9 and below
-        def pairwise(iterable):  # type: ignore[no-redef,no-untyped-def]
-            from itertools import tee
-
-            a, b = tee(iterable)
-            next(b, None)
-            return zip(a, b)
-
     published = _get_published_peps()
     proposed = _get_pr_peps()
     combined = published | proposed
@@ -182,7 +171,10 @@ def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None)
         return result + f"/topic/{search}/"
 
     if search.lower() == "next":
-        return f"Next available PEP: {_next_available_pep()}"
+        from yaspin import yaspin
+
+        with yaspin(color="yellow"):
+            return f"Next available PEP: {_next_available_pep()}"
 
     try:
         # pep 8

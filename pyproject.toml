@@ -40,6 +40,7 @@ dependencies = [
   "python-slugify",
   "rapidfuzz",
   "urllib3>=2",
+  "yaspin",
 ]
 optional-dependencies.tests = [
   "freezegun",
@@ -100,6 +101,9 @@ max_supported_python = "3.15"
 [tool.pytest.ini_options]
 addopts = "--color=yes"
 testpaths = [ "tests" ]
+filterwarnings = [
+  "ignore:color, on_color and attrs are not supported when output stream is not a TTY:UserWarning:yaspin",
+]
 
 [tool.coverage.run]
 omit = [

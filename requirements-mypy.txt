@@ -1,0 +1,7 @@
+mypy==1.12
+platformdirs
+pytest
+python-slugify
+rapidfuzz
+types-freezegun
+urllib3

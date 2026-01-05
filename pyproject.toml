@@ -47,6 +47,7 @@ optional-dependencies.tests = [
 ]
 urls.Changelog = "https://github.com/hugovk/pepotron/releases"
 urls.Homepage = "https://github.com/hugovk/pepotron"
+urls."Issue tracker" = "https://github.com/hugovk/pepotron/issues"
 urls.Source = "https://github.com/hugovk/pepotron"
 scripts.bpo = "pepotron.cli:bpo"
 scripts.pep = "pepotron.cli:main"
@@ -68,7 +69,7 @@ lint.select = [
   "C4",     # flake8-comprehensions
   "E",      # pycodestyle errors
   "EM",     # flake8-errmsg
-  "F",      # pyflakes errors
+  "F",      # pyflakes
   "I",      # isort
   "ICN",    # flake8-import-conventions
   "ISC",    # flake8-implicit-str-concat
@@ -81,27 +82,41 @@ lint.select = [
   "YTT",    # flake8-2020
 ]
 lint.ignore = [
-  "E203",  # Whitespace before ':'
-  "E221",  # Multiple spaces before operator
-  "E226",  # Missing whitespace around arithmetic operator
-  "E241",  # Multiple spaces after ','
-  "UP038", # Makes code slower and more verbose
+  "E203", # Whitespace before ':'
+  "E221", # Multiple spaces before operator
+  "E226", # Missing whitespace around arithmetic operator
+  "E241", # Multiple spaces after ','
 ]
 lint.flake8-import-conventions.aliases.datetime = "dt"
 lint.flake8-import-conventions.banned-from = [ "datetime" ]
 lint.isort.known-first-party = [ "pepotron" ]
 lint.isort.required-imports = [ "from __future__ import annotations" ]
+lint.future-annotations = true
 
 [tool.pyproject-fmt]
 max_supported_python = "3.14"
 
 [tool.pytest.ini_options]
 addopts = "--color=yes"
-filterwarnings = [
-  # Python <= 3.11
-  "ignore:sys.monitoring isn't available, using default core:coverage.exceptions.CoverageWarning",
-]
 testpaths = [ "tests" ]
+
+[tool.coverage.run]
+omit = [
+  "**/__main__.py",
+  "**/cli.py",
+  "**/scripts/*",
+]
+
+[tool.coverage.report]
+# Regexes for lines to exclude from consideration
+exclude_also = [
+  # Don't complain if non-runnable code isn't run:
+  "if __name__ == .__main__.:",
+  "def _get_github_prs",
+  "except ImportError:",
+  "except OSError:",
+  "if not dry_run:",
+]
 
 [tool.mypy]
 pretty = true

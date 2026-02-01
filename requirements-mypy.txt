@@ -1,4 +1,4 @@
-mypy==1.19
+mypy==1.19.1
 platformdirs
 pytest
 python-slugify

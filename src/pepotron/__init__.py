@@ -103,8 +103,8 @@ def _next_available_pep() -> int:
 def _get_github_prs() -> list[Any]:
     from ghapi.all import GhApi
 
-    api = GhApi(owner="python", repo="peps", authenticate=False)  # type: ignore[no-untyped-call]
-    return api.pulls.list(per_page=100)  # type: ignore[no-any-return]
+    api = GhApi(owner="python", repo="peps", authenticate=False)
+    return api.pulls.list(per_page=100)
 
 
 def _get_pr_peps() -> set[int]:

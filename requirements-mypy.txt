@@ -1,7 +1,0 @@
-mypy==1.19.1
-platformdirs
-pytest
-python-slugify
-rapidfuzz
-types-freezegun
-urllib3

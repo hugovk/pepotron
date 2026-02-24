@@ -32,15 +32,14 @@ def test_url(search: str, expected_url: str) -> None:
     assert pep_url == expected_url
 
 
-def test_next() -> None:
+def test_next(monkeypatch: pytest.MonkeyPatch) -> None:
     # Arrange
     Pull = namedtuple("Pull", ["title"])
     prs = [
         Pull(title="PEP 716: Seven One Six"),
         Pull(title="PEP 717: Seven One Seven"),
     ]
-    # mock _get_github_prs:
-    pepotron._get_github_prs = lambda: prs
+    monkeypatch.setattr(pepotron, "_get_github_prs", lambda: prs)
 
     # Act
     next_pep = pepotron.pep_url("next")

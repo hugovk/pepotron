@@ -6,7 +6,6 @@ from __future__ import annotations
 
 import logging
 from itertools import pairwise
-from pathlib import Path
 from typing import Any
 
 from . import _cache, _version
@@ -51,7 +50,7 @@ VERSION_TO_PEP = {
 logger = logging.getLogger(__name__)
 
 
-def _download_peps_json(json_url: str = BASE_URL + JSON_PATH) -> Path:
+def _get_peps(json_url: str = BASE_URL + JSON_PATH) -> _cache.PepData:
     cache_file = _cache.filename(json_url)
     logger.info("Cache file: %s", cache_file)
 
@@ -74,18 +73,7 @@ def _download_peps_json(json_url: str = BASE_URL + JSON_PATH) -> Path:
         _cache.save(cache_file, data)
 
     logger.info("")
-    return cache_file
-
-
-def _get_peps() -> _cache.PepData:
-    import json
-
-    peps_file = _download_peps_json()
-
-    with open(peps_file) as f:
-        peps: _cache.PepData = json.load(f)
-
-    return peps
+    return data
 
 
 def _get_published_peps() -> set[int]:

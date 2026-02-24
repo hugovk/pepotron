@@ -56,7 +56,7 @@ def _download_peps_json(json_url: str = BASE_URL + JSON_PATH) -> Path:
     logger.info("Cache file: %s", cache_file)
 
     data = _cache.load(cache_file)
-    if data == {}:
+    if not data:
         # No cache, or couldn't load cache
         import urllib3
 
@@ -90,7 +90,7 @@ def _get_peps() -> _cache.PepData:
 
 def _get_published_peps() -> set[int]:
     peps = _get_peps()
-    numbers = {int(number) for number, details in peps.items()}
+    numbers = {int(number) for number in peps}
     return numbers
 
 
@@ -148,11 +148,7 @@ def word_search(search: str | None) -> int:
     print()
 
     # Find PEP number of top match
-    number: str = next(
-        number for number, details in peps.items() if details["title"] == result[0][0]
-    )
-
-    return int(number)
+    return int(titles[result[0][0]])
 
 
 def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> str:

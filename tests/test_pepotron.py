@@ -4,7 +4,7 @@ Unit tests
 
 from __future__ import annotations
 
-from collections import namedtuple
+from typing import NamedTuple
 
 import pytest
 
@@ -34,7 +34,9 @@ def test_url(search: str, expected_url: str) -> None:
 
 def test_next(monkeypatch: pytest.MonkeyPatch) -> None:
     # Arrange
-    Pull = namedtuple("Pull", ["title"])
+    class Pull(NamedTuple):
+        title: str
+
     prs = [
         Pull(title="PEP 716: Seven One Six"),
         Pull(title="PEP 717: Seven One Seven"),

@@ -32,15 +32,14 @@ def test_url(search: str, expected_url: str) -> None:
     assert pep_url == expected_url
 
 
-def test_next() -> None:
+def test_next(monkeypatch: pytest.MonkeyPatch) -> None:
     # Arrange
     Pull = namedtuple("Pull", ["title"])
     prs = [
         Pull(title="PEP 716: Seven One Six"),
         Pull(title="PEP 717: Seven One Seven"),
     ]
-    # mock _get_github_prs:
-    pepotron._get_github_prs = lambda: prs
+    monkeypatch.setattr(pepotron, "_get_github_prs", lambda: prs)
 
     # Act
     next_pep = pepotron.pep_url("next")
@@ -98,18 +97,19 @@ def test_url_pr(search: str | None, expected_url: str) -> None:
     assert pep_url == expected_url
 
 
-def test__download_peps_json_ok() -> None:
+def test__get_peps_ok() -> None:
     # Arrange
     pepotron._cache.clear(clear_all=True)
     # Act
-    filename = pepotron._download_peps_json()
+    data = pepotron._get_peps()
     # Assert
-    assert filename.suffix == ".json"
+    assert isinstance(data, dict)
+    assert len(data) > 0
 
 
-def test__download_peps_json_error() -> None:
+def test__get_peps_error() -> None:
     with pytest.raises(RuntimeError):
-        pepotron._download_peps_json("https://httpbin.org/status/404")
+        pepotron._get_peps("https://httpbin.org/status/404")
 
 
 def test_pep() -> None:

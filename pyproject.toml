@@ -44,7 +44,7 @@ dependencies = [
 ]
 optional-dependencies.tests = [
   "freezegun",
-  "pytest",
+  "pytest>=9",
   "pytest-cov",
 ]
 urls.Changelog = "https://github.com/hugovk/pepotron/releases"
@@ -77,6 +77,9 @@ lint.select = [
   "ISC",    # flake8-implicit-str-concat
   "LOG",    # flake8-logging
   "PGH",    # pygrep-hooks
+  "PIE",    # flake8-pie
+  "PT",     # flake8-pytest-style
+  "PYI",    # flake8-pyi
   "RUF022", # unsorted-dunder-all
   "RUF100", # unused noqa (yesqa)
   "UP",     # pyupgrade
@@ -84,13 +87,15 @@ lint.select = [
   "YTT",    # flake8-2020
 ]
 lint.ignore = [
-  "E203", # Whitespace before ':'
-  "E221", # Multiple spaces before operator
-  "E226", # Missing whitespace around arithmetic operator
-  "E241", # Multiple spaces after ','
+  "E203",   # Whitespace before ':'
+  "E221",   # Multiple spaces before operator
+  "E226",   # Missing whitespace around arithmetic operator
+  "E241",   # Multiple spaces after ','
+  "PIE790", # flake8-pie: unnecessary-placeholder
 ]
 lint.flake8-import-conventions.aliases.datetime = "dt"
 lint.flake8-import-conventions.banned-from = [ "datetime" ]
+lint.flake8-pytest-style.parametrize-names-type = "csv"
 lint.isort.known-first-party = [ "pepotron" ]
 lint.isort.required-imports = [ "from __future__ import annotations" ]
 lint.future-annotations = true
@@ -98,8 +103,9 @@ lint.future-annotations = true
 [tool.pyproject-fmt]
 max_supported_python = "3.15"
 
-[tool.pytest.ini_options]
-addopts = "--color=yes"
+[tool.pytest]
+minversion = "9.0"
+addopts = [ "--color=yes" ]
 testpaths = [ "tests" ]
 filterwarnings = [
   "ignore:color, on_color and attrs are not supported when output stream is not a TTY:UserWarning:yaspin",

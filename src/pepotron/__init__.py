@@ -88,7 +88,7 @@ def _next_available_pep() -> int:
     combined = published | proposed
     numbers = sorted(combined)
 
-    start = 715
+    start = 828
     next_pep = -1
     for x, y in pairwise(numbers):
         if x < start:

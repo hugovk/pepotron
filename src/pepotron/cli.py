@@ -50,7 +50,7 @@ def main() -> None:
         "--clear-cache", action="store_true", help="Clear cache before running"
     )
     parser = add_common_arguments(parser)
-    args = parser.parse_args()
+    args, remaining = parser.parse_known_args()
 
     logging.basicConfig(level=args.loglevel, format="%(message)s")
     if args.search:
@@ -58,7 +58,24 @@ def main() -> None:
     if args.clear_cache:
         _cache.clear(clear_all=True)
 
-    open_pep(search=args.search, base_url=args.url, pr=args.pr, dry_run=args.dry_run)
+    ignore: list[str] = []
+    if args.search and args.search.lower() == "next" and remaining:
+        next_parser = argparse.ArgumentParser()
+        next_parser.add_argument("--ignore", nargs="*", default=[])
+        next_args = next_parser.parse_args(remaining)
+        ignore = next_args.ignore
+        remaining = []
+
+    if remaining:
+        parser.error(f"unrecognized arguments: {' '.join(remaining)}")
+
+    open_pep(
+        search=args.search,
+        base_url=args.url,
+        pr=args.pr,
+        dry_run=args.dry_run,
+        ignore=ignore,
+    )
 
 
 def bpo() -> None:

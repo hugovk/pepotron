@@ -82,9 +82,9 @@ def _get_published_peps() -> set[int]:
     return numbers
 
 
-def _next_available_pep() -> int:
+def _next_available_pep(ignore: list[str] | None = None) -> int:
     published = _get_published_peps()
-    proposed = _get_pr_peps()
+    proposed = _get_pr_peps(ignore=ignore)
     combined = published | proposed
     numbers = sorted(combined)
 
@@ -107,13 +107,23 @@ def _get_github_prs() -> list[Any]:
     return api.pulls.list(per_page=100)
 
 
-def _get_pr_peps() -> set[int]:
+def _get_pr_peps(ignore: list[str] | None = None) -> set[int]:
     import re
+
+    pr_url_regex = re.compile(r"/pull/(\d+)")
+    ignored_prs = set()
+    for value in ignore or []:
+        if value.isdigit():
+            ignored_prs.add(int(value))
+        elif match := re.search(pr_url_regex, value):
+            ignored_prs.add(int(match[1]))
 
     pr_title_regex = re.compile(r"^PEP (\d+): .*")
 
     numbers = set()
     for pr in _get_github_prs():
+        if pr.number in ignored_prs:
+            continue
         if match := re.search(pr_title_regex, pr.title):
             number = match[1]
             numbers.add(int(number))
@@ -139,7 +149,12 @@ def word_search(search: str | None) -> int:
     return int(titles[result[0][0]])
 
 
-def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None) -> str:
+def pep_url(
+    search: str | None,
+    base_url: str = BASE_URL,
+    pr: int | None = None,
+    ignore: list[str] | None = None,
+) -> str:
     """Get PEP URL"""
     if pr:
         base_url = f"https://pep-previews--{pr}.org.readthedocs.build"
@@ -159,7 +174,7 @@ def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None)
         from yaspin import yaspin
 
         with yaspin(color="yellow"):
-            return f"Next available PEP: {_next_available_pep()}"
+            return f"Next available PEP: {_next_available_pep(ignore=ignore)}"
 
     try:
         # pep 8
@@ -176,10 +191,14 @@ def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None)
 
 
 def open_pep(
-    search: str, base_url: str = BASE_URL, pr: int | None = None, dry_run: bool = False
+    search: str,
+    base_url: str = BASE_URL,
+    pr: int | None = None,
+    dry_run: bool = False,
+    ignore: list[str] | None = None,
 ) -> str:
     """Open this PEP in the browser"""
-    url = pep_url(search, base_url, pr)
+    url = pep_url(search, base_url, pr, ignore=ignore)
     if not dry_run and "Next available PEP: " not in url:
         import webbrowser
 

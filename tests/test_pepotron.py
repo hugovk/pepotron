@@ -11,6 +11,11 @@ import pytest
 import pepotron
 
 
+class Pull(NamedTuple):
+    number: int
+    title: str
+
+
 @pytest.mark.parametrize(
     "search, expected_url",
     [
@@ -34,12 +39,9 @@ def test_url(search: str, expected_url: str) -> None:
 
 def test_next(monkeypatch: pytest.MonkeyPatch) -> None:
     # Arrange
-    class Pull(NamedTuple):
-        title: str
-
     prs = [
-        Pull(title="PEP 716: Seven One Six"),
-        Pull(title="PEP 717: Seven One Seven"),
+        Pull(number=1, title="PEP 716: Seven One Six"),
+        Pull(number=2, title="PEP 717: Seven One Seven"),
     ]
     monkeypatch.setattr(pepotron, "_get_github_prs", lambda: prs)
 
@@ -49,6 +51,34 @@ def test_next(monkeypatch: pytest.MonkeyPatch) -> None:
     # Assert
     assert next_pep.startswith("Next available PEP: ")
     assert next_pep.split()[-1].isdigit()
+
+
+def test_next_ignore(monkeypatch: pytest.MonkeyPatch) -> None:
+    # Arrange
+    prs = [
+        Pull(number=100, title="PEP 829: Eight Two Nine"),
+        Pull(number=101, title="PEP 832: Eight Three Two"),
+    ]
+    monkeypatch.setattr(pepotron, "_get_github_prs", lambda: prs)
+    monkeypatch.setattr(
+        pepotron, "_get_published_peps", lambda: set(range(1, 829)) | {830}
+    )
+
+    # Act
+    without_ignore = pepotron.pep_url("next")
+    with_ignore = pepotron.pep_url(
+        "next", ignore=["https://github.com/python/peps/pull/100"]
+    )
+
+    with_ignore_int = pepotron.pep_url("next", ignore=["100"])
+
+    # Assert
+    # Without ignore, 829 and 830 are taken, so next is 831
+    assert without_ignore == "Next available PEP: 831"
+    # With ignore, PR 100 (PEP 829) is ignored, so 829 is available
+    assert with_ignore == "Next available PEP: 829"
+    # Also works with just a PR number
+    assert with_ignore_int == "Next available PEP: 829"
 
 
 @pytest.mark.parametrize(

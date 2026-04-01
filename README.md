@@ -182,6 +182,17 @@ Next available PEP: 769
 
 <!-- [[[end]]] -->
 
+#### Ignore specific PRs
+
+Use `--ignore` to exclude specific PEP PRs, by URL or PR number:
+
+```console
+$ pep next --ignore https://github.com/python/peps/pull/4882
+Next available PEP: 769
+$ pep next --ignore 4882
+Next available PEP: 769
+```
+
 ### Open a BPO issue in the browser
 
 Issues from [bugs.python.org](https://bugs.python.org/) have been migrated to

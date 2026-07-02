@@ -5,8 +5,10 @@ Unit tests
 from __future__ import annotations
 
 from typing import NamedTuple
+from unittest import mock
 
 import pytest
+import urllib3
 
 import pepotron
 
@@ -110,8 +112,12 @@ def test__get_peps_ok() -> None:
 
 
 def test__get_peps_error() -> None:
-    with pytest.raises(RuntimeError):
-        pepotron._get_peps("https://httpbin.org/status/404")
+    response = mock.Mock(status=404)
+    with (
+        mock.patch.object(urllib3, "request", return_value=response),
+        pytest.raises(RuntimeError, match="status 404"),
+    ):
+        pepotron._get_peps("https://example.com/peps.json")
 
 
 def test_pep() -> None:

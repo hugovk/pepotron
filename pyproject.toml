@@ -100,17 +100,17 @@ lint.future-annotations = true
 max_supported_python = "3.15"
 
 [tool.mypy]
-pretty = true
 strict = true
+pretty = true
 show_error_codes = true
 
 [tool.pytest]
-minversion = "9.0"
 addopts = [ "--color=yes" ]
-testpaths = [ "tests" ]
 filterwarnings = [
   "ignore:color, on_color and attrs are not supported when output stream is not a TTY:UserWarning:yaspin",
 ]
+minversion = "9.0"
+testpaths = [ "tests" ]
 
 [tool.coverage]
 run.omit = [

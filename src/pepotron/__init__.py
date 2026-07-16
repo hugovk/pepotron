@@ -5,6 +5,7 @@ CLI to open PEPs in your browser
 from __future__ import annotations
 
 import logging
+import sys
 from itertools import pairwise
 from typing import Any
 
@@ -45,7 +46,8 @@ VERSION_TO_PEP = {
     "3.15": 790,
     "3.16": 826,
 }
-
+if sys.version_info >= (3, 15):
+    VERSION_TO_PEP = frozendict(VERSION_TO_PEP)
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +61,7 @@ def _get_peps(json_url: str = BASE_URL + JSON_PATH) -> _cache.PepData:
         # No cache, or couldn't load cache
         import urllib3
 
-        resp = urllib3.request("GET", json_url, headers={"User-Agent": USER_AGENT})
+        resp = urllib3.request("GET", json_url, headers={"User-Agent":USER_AGENT})
 
         # Raise if we made a bad request
         # (4XX client error or 5XX server error response)

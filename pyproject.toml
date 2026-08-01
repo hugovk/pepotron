@@ -35,7 +35,7 @@ classifiers = [
 ]
 dynamic = [ "version" ]
 dependencies = [
-  "ghapi<2",
+  "ghapi<3",
   "platformdirs",
   "python-slugify",
   "rapidfuzz",

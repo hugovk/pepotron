@@ -101,10 +101,24 @@ def _next_available_pep() -> int:
 
 
 def _get_github_prs() -> list[Any]:
-    from ghapi.all import GhApi
+    import urllib3
 
-    api = GhApi(owner="python", repo="peps", authenticate=False)
-    return api.pulls.list(per_page=100)
+    prs_url = "https://api.github.com/repos/python/peps/pulls?per_page=100"
+    resp = urllib3.request(
+        "GET",
+        prs_url,
+        headers={
+            "User-Agent": USER_AGENT,
+            "Accept": "application/vnd.github+json",
+        },
+    )
+
+    logger.info("HTTP status code: %s", resp.status)
+    if resp.status != 200:
+        msg = f"Unable to download {prs_url}: status {resp.status}"
+        raise RuntimeError(msg)
+
+    return resp.json()
 
 
 def _get_pr_peps() -> set[int]:
@@ -114,7 +128,7 @@ def _get_pr_peps() -> set[int]:
 
     numbers = set()
     for pr in _get_github_prs():
-        if match := re.search(pr_title_regex, pr.title):
+        if match := re.search(pr_title_regex, pr["title"]):
             number = match[1]
             numbers.add(int(number))
 

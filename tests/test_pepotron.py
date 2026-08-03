@@ -4,7 +4,6 @@ Unit tests
 
 from __future__ import annotations
 
-from typing import NamedTuple
 from unittest import mock
 
 import pytest
@@ -36,12 +35,9 @@ def test_url(search: str, expected_url: str) -> None:
 
 def test_next() -> None:
     # Arrange
-    class Pull(NamedTuple):
-        title: str
-
     prs = [
-        Pull(title="PEP 716: Seven One Six"),
-        Pull(title="PEP 717: Seven One Seven"),
+        {"title": "PEP 716: Seven One Six"},
+        {"title": "PEP 717: Seven One Seven"},
     ]
 
     # Act

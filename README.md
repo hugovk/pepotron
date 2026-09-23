@@ -61,6 +61,18 @@ $ uvx pepotron 8
 https://peps.python.org/pep-0008/
 ```
 
+### Open multiple PEPs
+
+<!-- [[[cog run("pep 745 790") ]]] -->
+
+```console
+$ pep 745 790
+https://peps.python.org/pep-0745/
+https://peps.python.org/pep-0790/
+```
+
+<!-- [[[end]]] -->
+
 ### Open release schedule PEP for a Python version
 
 <!-- [[[cog run("pep 3.11") ]]] -->
@@ -81,9 +93,9 @@ $ pep dead batteries
 Score   Result
 90      PEP 594: Removing dead batteries from the standard library
 61      PEP 767: Annotating Read-Only Attributes
+60      PEP 845: Leading-Dot Value Patterns
 58      PEP 415: Implement context suppression with exception attributes
 55      PEP 476: Enabling certificate verification by default for stdlib http clients
-55      PEP 500: A protocol for delegating datetime methods to their tzinfo implementations
 
 https://peps.python.org/pep-0594/
 ```
@@ -210,8 +222,8 @@ usage: pep [-h] [-u URL] [-p PR] [--clear-cache] [-n] [-v] [-V] [search ...]
 pepotron: CLI to open PEPs in your browser
 
 positional arguments:
-  search         PEP number, or Python version for its schedule, or words from title, or 'next' to
-                 find next available PEP number
+  search         PEP numbers, or Python version for its schedule, or words
+                 from title, or 'next' to find next available PEP number
 
 options:
   -h, --help     show this help message and exit

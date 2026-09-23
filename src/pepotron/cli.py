@@ -39,7 +39,7 @@ def main() -> None:
     parser.add_argument(
         "search",
         nargs="*",
-        help="PEP number, or Python version for its schedule, or words from title, "
+        help="PEP numbers, or Python version for its schedule, or words from title, "
         "or 'next' to find next available PEP number",
     )
     parser.add_argument(
@@ -53,12 +53,18 @@ def main() -> None:
     args = parser.parse_args()
 
     logging.basicConfig(level=args.loglevel, format="%(message)s")
-    if args.search:
-        args.search = " ".join(args.search)
     if args.clear_cache:
         _cache.clear(clear_all=True)
 
-    open_pep(search=args.search, base_url=args.url, pr=args.pr, dry_run=args.dry_run)
+    if args.search and all(word.isdigit() for word in args.search):
+        # pep 745 790
+        searches = args.search
+    else:
+        # pep dead batteries
+        searches = [" ".join(args.search)]
+
+    for search in searches:
+        open_pep(search=search, base_url=args.url, pr=args.pr, dry_run=args.dry_run)
 
 
 def bpo() -> None:

@@ -10,6 +10,7 @@ import pytest
 import urllib3
 
 import pepotron
+from pepotron import cli
 
 
 @pytest.mark.parametrize(
@@ -119,6 +120,32 @@ def test__get_peps_error() -> None:
 def test_pep() -> None:
     url = pepotron.open_pep("8", dry_run=True)
     assert url == "https://peps.python.org/pep-0008/"
+
+
+@pytest.mark.parametrize(
+    "argv, expected_output",
+    [
+        (["pep", "--dry-run"], "https://peps.python.org\n"),
+        (["pep", "--dry-run", "8"], "https://peps.python.org/pep-0008/\n"),
+        (
+            ["pep", "--dry-run", "745", "790"],
+            "https://peps.python.org/pep-0745/\nhttps://peps.python.org/pep-0790/\n",
+        ),
+        (
+            ["pep", "--dry-run", "dead", "batteries"],
+            "https://peps.python.org/pep-0594/\n",
+        ),
+    ],
+)
+def test_cli(
+    argv: list[str], expected_output: str, capsys: pytest.CaptureFixture[str]
+) -> None:
+    # Act
+    with mock.patch("sys.argv", argv):
+        cli.main()
+
+    # Assert
+    assert capsys.readouterr().out.endswith(expected_output)
 
 
 def test_open_bpo() -> None:

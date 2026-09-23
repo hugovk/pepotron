@@ -13,7 +13,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["pypy3.11", "3.15", "3.14", "3.13", "3.12", "3.11", "3.10"]
+        python-version:
+          - "pypy3.12"
+          - "pypy3.11"
+          - "3.15t"
+          - "3.15"
+          - "3.14t"
+          - "3.14"
+          - "3.13"
+          - "3.12"
+          - "3.11"
         os: [Windows, macOS, Ubuntu]
 
     steps:
@@ -32,11 +41,11 @@ jobs:
 
       - name: Tox tests
         run: |
-          uvx --with tox-uv tox -e py
+          uvx --python ${{ matrix.python-version }} --with tox-uv tox -e py
 
       - name: Test CLI
         run: |
-          uvx --with tox-uv tox -e cli
+          uvx --python ${{ matrix.python-version }} --with tox-uv tox -e cli
 
       - name: Cog
         if: matrix.python-version == '3.13' && matrix.os == 'ubuntu-latest'
@@ -50,9 +59,12 @@ jobs:
           name: ${{ matrix.os }} Python ${{ matrix.python-version }}
 
   success:
+    if: always()
     needs: test
     runs-on: ubuntu-latest
     name: Test successful
     steps:
       - name: Success
-        run: echo Test successful
+        env:
+          TEST_RESULT: ${{ needs.test.result }}
+        run: test "$TEST_RESULT" = "success"

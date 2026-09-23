@@ -124,5 +124,5 @@ report.exclude_also = [
   "except OSError:",
   # Don't complain if non-runnable code isn't run:
   "if __name__ == .__main__.:",
-  "if not dry_run:",
+  "if not dry_run",
 ]

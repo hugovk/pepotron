@@ -151,3 +151,10 @@ def test_cli(
 def test_open_bpo() -> None:
     url = pepotron.open_bpo(38374, dry_run=True)
     assert url == "https://bugs.python.org/issue?@action=redirect&bpo=38374"
+
+@pytest.mark.parametrize("search", ["0", "-1", "-42"])
+def test_url_rejects_non_positive_pep_number(search: str) -> None:
+    # Act / Assert: there is no PEP 0 or negative PEP, so this must not
+    # silently build a bogus URL that gets opened in the browser
+    with pytest.raises(ValueError, match="positive"):
+        pepotron.pep_url(search)

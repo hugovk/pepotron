@@ -186,6 +186,10 @@ def pep_url(search: str | None, base_url: str = BASE_URL, pr: int | None = None)
             # pep "dead batteries"
             number = word_search(search)
 
+    if number <= 0:
+        msg = f"Invalid PEP number {search!r}: must be positive"
+        raise ValueError(msg)
+
     return result + f"/pep-{number:0>4}/"
 
 
